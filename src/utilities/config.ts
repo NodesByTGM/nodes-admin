@@ -17,7 +17,7 @@ const API_ENDPOINTS = {
     SendOTP: `${BASE_API_ENDPOINT}/auth/send-otp`,
     VerfiyEmail: `${BASE_API_ENDPOINT}/auth/verify-email`,
     ProfileURL: `${BASE_API_ENDPOINT}/users/profile`,
-    GoogleSocial: `${BASE_API_ENDPOINT}/socialauth/google/auth`
+    GoogleSocial: `${BASE_API_ENDPOINT}/socialauth/google/auth`,
   },
   Community: {
     Post: `${BASE_API_ENDPOINT}/community/posts`,
@@ -26,7 +26,6 @@ const API_ENDPOINTS = {
     UserProfile: `${BASE_API_ENDPOINT}/users/profile`,
     UserById: `${BASE_API_ENDPOINT}/users/:id`,
     AllUsers: `${BASE_API_ENDPOINT}/users`,
-
   },
   Job: {
     JobUrl: `${BASE_API_ENDPOINT}/jobs`,
@@ -63,6 +62,10 @@ const API_ENDPOINTS = {
   Trending: {
     Events: `${BASE_API_ENDPOINT}/trending`,
     Movies: `${BASE_API_ENDPOINT}/movies-and-shows`,
+  },
+  Content: {
+    GeneralContents: `${BASE_API_ENDPOINT}/cms/contents`,
+    Admin: `${BASE_API_ENDPOINT}/cms/admin/contents`,
   },
 };
 

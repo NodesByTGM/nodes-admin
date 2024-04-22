@@ -44,10 +44,6 @@ export const generalApi: any = createApi({
       },
     }),
 
-
-
-
-  
     uploadFile: builder.mutation<any, any>({
       query: (data) => {
         return {
@@ -57,9 +53,12 @@ export const generalApi: any = createApi({
         };
       },
     }),
-
-   
   }),
 });
 
-export const {  useResetPasswordMutation, useForgotPasswordMutation, useLoginMutation, useUploadFileMutation,  } = generalApi;
+export const {
+  useResetPasswordMutation,
+  useForgotPasswordMutation,
+  useLoginMutation,
+  useUploadFileMutation,
+} = generalApi;

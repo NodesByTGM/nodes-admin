@@ -1,9 +1,17 @@
-import React, { useState } from "react";
-import { AdminPageHeader, AdminPageNav } from "../../components";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from "react";
+import { AdminPageHeader, AdminPageNav, Loader } from "../../components";
+import { useContentContext } from "../../context/hooks";
+import { useGetContentsForAdminQuery } from "../../api";
 export default function Content() {
-  const user = useSelector((state: RootState) => state.user.user);
+  const { pageName, user } = useContentContext();
+  const [contentData, setContentData] = useState<any>([]);
+
+  const {
+    data: contentResponse,
+    // refetch: contentRefetch,
+    isFetching: contentLoading,
+  } = useGetContentsForAdminQuery({});
 
   const navs = [
     {
@@ -18,25 +26,33 @@ export default function Content() {
   ];
 
   const [selectedNav, setSelectedNav] = useState(navs[0]);
-  const contentList = [
-    {
-      id: 1,
-      title: "Jane Doe",
-      description: "Description stuff",
-      date: "23/08/2024",
-      category: "Trending News",
-    },
-    {
-      id: 2,
-      title: "Jane Doe",
-      description: "Description stuff",
-      date: "23/08/2024",
-      category: "Trending News",
-    },
-  ];
+  // const contentData = [
+  //   {
+  //     id: 1,
+  //     title: "Jane Doe",
+  //     description: "Description stuff",
+  //     date: "23/08/2024",
+  //     category: "Trending News",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Jane Doe",
+  //     description: "Description stuff",
+  //     date: "23/08/2024",
+  //     category: "Trending News",
+  //   },
+  // ];
+
+  useEffect(() => {
+    if (contentResponse?.result?.items?.length > 0) {
+      setContentData(contentResponse?.result.items);
+    }
+  }, [contentResponse]);
   return (
     <div>
-      <pre className="text-blue-400 hidden">{JSON.stringify(user, null, 2)}</pre>
+      <pre className="text-blue-400 hidden">
+        {JSON.stringify({ pageName, user }, null, 2)}
+      </pre>
       <div className="flex justify-between mb-[26px]">
         <AdminPageHeader
           title="Content"
@@ -52,7 +68,7 @@ export default function Content() {
       </div>
 
       <div className=" py-6">
-        {contentList?.length > 0 ? (
+        {contentData?.length > 0 ? (
           <div className="flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -93,8 +109,13 @@ export default function Content() {
                       </th> */}
                     </tr>
                   </thead>
+                  {contentLoading && contentData.length === 0 ? (
+                    <div className="my-40">
+                      <Loader />
+                    </div>
+                  ) : null}
                   <tbody className="divide-y divide-[#F2F2F2]">
-                    {contentList?.map((item) => (
+                    {contentData?.map((item) => (
                       <tr key={item.id}>
                         <td className="whitespace-nowrap py-8 pl-4 pr-3 text-base font-normal text-[#212121] sm:pl-0">
                           {item.title}
