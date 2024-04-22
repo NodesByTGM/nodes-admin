@@ -27,6 +27,27 @@ export const checkFileSize = (file: File) => {
   return true;
 };
 
+
+
+export const getNameInitials = (name: string): string => {
+  // Split the name into words
+  const words = name.split(' ');
+
+  // Initialize an empty string to store initials
+  let initials = '';
+
+  // Iterate over each word
+  words.forEach((word, ) => {
+    // If the initials are less than 2 and there's a character in the current word, add it to initials
+    if (initials.length < 2 && word.length > 0) {
+      // Add the first character of the word to initials
+      initials += word[0].toUpperCase();
+    }
+  });
+
+  return initials;
+};
+
 export const getExtension = (fileName: string) => {
   return fileName.substring(fileName.lastIndexOf(".") + 1);
 };
@@ -68,6 +89,26 @@ export const convertToBase64 = async (file: File) => {
 
 //     return keyValuePairs.join('&');
 // }
+
+export function returnMaxDate (){
+  const currentDate = new Date();
+  const maxDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+    const formattedMaxDate = maxDate.toISOString().split('T')[0];
+
+    return formattedMaxDate
+}
+export function capitalizeWords(str) {
+  return str.replace(/\b\w/g, function(char) {
+    return char.toUpperCase();
+  });
+}
+
+export const checkIfCurrentPlan = (user, plan) => {
+  if(user?.subscription?.plan?.tolowerCase() === plan?.type?.toLowerCase()){
+    return true
+  }
+  return false
+}
 
 export const formatDate = (date: string) => {
   return moment(date).calendar({
@@ -151,6 +192,7 @@ export const validateFormData = (formData: FormData) => {
 export const payWithPaystack = ({
   email,
   amount,
+  plan,
   onSuccess,
   onClose,
 }: IPayWithPaystack) => {
@@ -158,6 +200,7 @@ export const payWithPaystack = ({
     key: `${import.meta.env.VITE_APP_PAYSTACK_API_PUBLIC_KEY}`,
     email,
     amount: amount * 100,
+    plan,
     onSuccess,
     onClose,
   });

@@ -20,7 +20,7 @@ const getProfile = (WrappedComponent: FC) => {
         })
         .then((r) => {
           if (r.status === 200) {
-            setUser(r.data.user);
+            setUser(r?.data?.result?.user);
           }
         })
         .catch((e) => {

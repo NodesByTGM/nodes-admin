@@ -45,7 +45,7 @@ export default function Button({
       disabled={disabled}
       {...props}
       className={clsx(
-        "whitespace-nowrap rounded-[5px]",
+        "whitespace-nowrap rounded-[8px]",
         "outline-none transition-all border w-full ${}",
         "flex items-center gap-2 justify-center",
         themeKVP[theme],

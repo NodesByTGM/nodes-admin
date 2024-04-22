@@ -40,8 +40,8 @@ export default function Individual() {
         <div className="mb-10 w-full">
           <Interaction
             data={bio}
-            headline={profileData?.user?.headline}
-            bio={profileData?.user?.bio}
+            headline={profileData?.result?.headline}
+            bio={profileData?.result?.bio}
           />
         </div>
         <div

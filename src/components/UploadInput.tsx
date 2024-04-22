@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MutableRefObject, useEffect, useRef } from "react";
 import { GalleryIcon } from "../assets/svg"
 import { checkFileSize } from "../utilities/common";

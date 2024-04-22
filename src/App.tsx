@@ -1,31 +1,25 @@
 import { useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
-import {
-  RouterProvider,
-  createBrowserRouter,
- 
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "swiper/css";
 import "./App.css";
 import "./tailwind.css";
+import "./index.css";
+
 import AuthProvider from "./context/auth";
-import { AuthLayout, MainLayout } from "./layout";
-import { Register } from "./pages";
-import AppConfig
-// { BASE_API_ENDPOINT } 
-from "./utilities/config";
-import { authRoutes, publicRoutes, upgradeRoutes } from "./utilities/routes";
+import { AdminAuthLayout, AdminMainLayout } from "./layout";
+// import { Register } from "./pages";
+// import AppConfig from "./utilities/config"; // { BASE_API_ENDPOINT }
+import { adminAuthRoutes, adminMainRoutes } from "./utilities/routes";
 import AppWrapper from "./AppWrapper";
 const router = createBrowserRouter([
   {
-    // parent route component
-    element: <MainLayout />,
-
+    element: <AdminAuthLayout />,
     // child route components
     children: [
-      ...publicRoutes.map((route) => ({
+      ...adminAuthRoutes.map((route) => ({
         path: route.path,
         Component: route.Component,
         children:
@@ -37,49 +31,30 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // parent route component
-    element: <AuthLayout />,
+    element: <AdminMainLayout />,
     // child route components
     children: [
-      ...authRoutes.map((route) => ({
+      ...adminMainRoutes.map((route) => ({
         path: route.path,
         Component: route.Component,
+        children:
+          route?.children?.map((childRoute) => ({
+            path: childRoute.path,
+            Component: childRoute.Component,
+          })) || [],
       })),
     ],
   },
-  ...upgradeRoutes.map((route) => ({
-    path: route.path,
-    Component: route.Component,
-  })),
-  {
-    path: AppConfig.PATHS.Auth.Register,
-    Component: Register,
-  },
 ]);
 
-// const ScrollToTop = ({ children }) => {
-//   const { route } = useRoute();
-
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, [route]);
-
-//   return <div className="">{children}</div>;
-// };
-
-
 function App() {
-  useEffect(() => {
- 
-  }, []);
+  useEffect(() => {}, []);
   return (
     <div className="">
       <AppWrapper>
         <HelmetProvider>
           <AuthProvider>
-            {/* <ScrollToTop> */}
-              <RouterProvider router={router} />
-            {/* </ScrollToTop> */}
+            <RouterProvider router={router} />
           </AuthProvider>
         </HelmetProvider>
       </AppWrapper>

@@ -1,23 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { UserPost, UserPostInitials, PostInteraction } from "../../components";
 import { IoEllipsisHorizontalSharp } from "react-icons/io5";
+import { formatDate } from "../../utilities";
 
 type ICommunityPost = {
+  updatePosts?: (e) => void;
+  data?: any;
   canShare?: boolean;
   canReply?: boolean;
 };
 export default function CommunityPost({
+  updatePosts = () => {},
+  data,
   canShare = true,
   canReply = true,
 }: ICommunityPost) {
   return (
     <div className="flex flex-col w-full">
+      {/* <pre>{JSON.stringify(data.attachments, null, 2)}</pre> */}
+
       <div className="mb-8 flex items-center justify-between">
         <div className="flex gap-2 items-center font-medium text-sm">
-          <UserPostInitials />
-          <span className="text-[#000000]">Minato Namikaze</span>
+          <UserPostInitials name={data?.author?.name} />
+          <span className="text-[#000000]">{data?.author?.name}</span>
           <div className="size-1 rounded-full bg-[#D9D9D9]"></div>
-          <span className=" text-[#828282]">2 hours ago</span>
+          <span className=" text-[#828282]">{formatDate(data?.updatedAt)}</span>
         </div>
 
         <div className="">
@@ -25,20 +33,24 @@ export default function CommunityPost({
         </div>
       </div>
       <span className="mb-10 text-[#000000] text-base font-normal">
-        Lorem ipsum dolor sit amet consectetur. Feugiat senectus ut aenean
-        commodo dictum malesuada. Imperdiet orci magnis donec malesuada mi massa
-        magna lectus viverra. Nunc quam congue vulputate etiam dapibus vel
-        suscipit cras pretium. Ut donec vulputate etiam consectetur vel.
+        {data?.body}
       </span>
-      <div className="flex mb-10">
-        <img
-          src="/img/CommunityPostImgSample.png"
-          alt=""
-          className="rounded-md h-[173px] w-full max-w-[274px]"
-        />
+      <div className="flex mb-10 gap-3">
+        {data?.attachments?.map((img) => (
+          <img
+            key={img?.id}
+            src={img.url}
+            alt=""
+            className="rounded-md h-[173px] w-full max-w-[274px]"
+          />
+        ))}
       </div>
       <div className="flex justify-end">
-        <PostInteraction canShare={canShare} />
+        <PostInteraction
+          data={data}
+          canShare={canShare}
+          updatePosts={updatePosts}
+        />
       </div>
       {canReply ? (
         <div className="mt-8">

@@ -43,7 +43,7 @@ export default function JobPostForm({
   const [jobOptions] = useState([
     { id: 1, name: "Full time", value: 0, returnValue: "FullTime" },
     { id: 2, name: "Part time", value: 1, returnValue: "PartTime" },
-    { id: 3, name: "Contract", value: 3, returnValue: "Contract" },
+    { id: 3, name: "Contract", value: 2, returnValue: "Contract" },
   ]);
 
   const handleClickForm = (values?: any) => {
@@ -256,7 +256,7 @@ export default function JobPostForm({
               <Input
                 labelStyle="!text-base"
                 required
-                placeholder={AppConfig.PLACEHOLDERS.Hours}
+                placeholder={AppConfig.PLACEHOLDERS.Location}
                 id="location"
                 label="Location"
                 error={errors.location}

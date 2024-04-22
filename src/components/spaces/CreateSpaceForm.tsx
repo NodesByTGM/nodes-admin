@@ -178,7 +178,7 @@ export default function CreateSpaceForm({ closeModal }) {
                     onClick={() => arrayHelpers.push(initialRule)}
                     className="cursor-pointer flex items-center gap-6 mb-[16px]"
                   >
-                    <div className="rounded-full bg-primary font-normal text-xs text-white h-6 w-6   flex items-center justify-center">
+                    <div className="rounded-full bg-customsecondary font-normal text-xs text-white h-6 w-6   flex items-center justify-center">
                       <FaPlus />
                     </div>
                     <span className="text-primary font-normal text-base">

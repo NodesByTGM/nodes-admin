@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ButtonOutline } from "../components";
+import { Button } from "../components";
 type IDeleteComponent = {
   title?: string;
   text?: string;
@@ -47,13 +47,13 @@ export default function DeleteComponent({
       <span className="font-normal text-base text-[#212121]">{text}</span>
 
       <div className="grid grid-cols-2 gap-4 mt-10">
-        <div onClick={() => closeModal()} className="">
-          <ButtonOutline>No, Cancel</ButtonOutline>
+        <div onClick={() => closeModal()} className="flex-1">
+          <button className="border-[#EFEFEF] border h-full w-full outline-none focus:outline-nnone main-bg-gray rounded-lg">No, Cancel</button>
         </div>
-        <div onClick={() => action()} className="">
+        <div onClick={() => action()} className="flex-1">
           <Button
             isLoading={isLoading}
-            className={`!bg-[#D11F54] text-[#ffffff] focus:text-[#ffffff]`}
+            className={`!bg-[#D11F54] border-none text-[#ffffff] focus:text-[#ffffff]`}
           >
             Yes, Delete
           </Button>

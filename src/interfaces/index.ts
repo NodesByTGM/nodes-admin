@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IEventItem {
     id: string,
     eventDate: string,
@@ -73,6 +74,7 @@ export interface IPaystackCallbackResponse {
 export interface IPayWithPaystack {
     email: string,
     amount: number,
+    plan: string,
     onSuccess: (response: IPaystackCallbackResponse) => void,
     onClose: () => void
 }

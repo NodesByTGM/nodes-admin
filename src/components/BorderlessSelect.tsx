@@ -51,7 +51,7 @@ export default function BorderlessSelect({ label, options }: IProps) {
                           className={({ active }) =>
                             classNames(
                               active
-                                ? "bg-primary text-white"
+                                ? "bg-customsecondary text-white"
                                 : "text-gray-900",
                               "relative cursor-default select-none py-2 pl-3 pr-9"
                             )

@@ -172,10 +172,7 @@ export default function ProfileEventPostForm({
         className="hidden"
       />
       <FormikProvider value={formik}>
-        <div
-        
-          className="flex flex-col gap-6"
-        >
+        <div className="flex flex-col gap-6">
           <div className="w-full">
             <Input
               labelStyle="!text-base"
@@ -191,7 +188,6 @@ export default function ProfileEventPostForm({
             />
           </div>
 
-      
           <div className="grid grid-cols-2 gap-4">
             <div className="w-full col-span-2">
               <DateSelect
@@ -251,7 +247,7 @@ export default function ProfileEventPostForm({
                 <div
                   className={`${
                     values?.paymentType.toLowerCase() == "free"
-                      ? "bg-primary text-white"
+                      ? "bg-customsecondary text-white"
                       : "bg-white"
                   }  size-5 rounded-sm border flex items-center justify-center `}
                 >
@@ -267,7 +263,7 @@ export default function ProfileEventPostForm({
                 <div
                   className={`${
                     values?.paymentType.toLowerCase() == "paid"
-                      ? "bg-primary text-white"
+                      ? "bg-customsecondary text-white"
                       : "bg-white"
                   } size-5 rounded-sm border flex items-center justify-center `}
                 >
@@ -294,10 +290,10 @@ export default function ProfileEventPostForm({
           </div>
 
           <Button
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
             type="submit"
             isLoading={createEventLoading || editEventLoading}
             className={`${!isValid ? "opacity-50" : ""} ${

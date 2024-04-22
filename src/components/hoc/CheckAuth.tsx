@@ -19,10 +19,10 @@ const checkAuth = (WrappedComponent: FC) => {
                 try {
                     if (!user) {
                         const response = await mainClient.get(AppConfig.API_ENDPOINTS.Auth.ProfileURL, {
-                            headers: { Authorization: 'Token ' + localStorage.getItem("nodesToken") }
+                            headers: { Authorization: 'Token ' + localStorage.getItem("bearerToken") }
                         });
                         if (response.status === 200) {
-                            setUser(response.data.user);
+                            setUser(response?.data?.result?.user);
                         } else {
                             // Redirect to the login page if the authentication fails
                             navigate(AppConfig.PATHS.Auth.Login, { replace: true })

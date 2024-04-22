@@ -6,8 +6,8 @@ export default {
       colors: {
         primary: {
           DEFAULT: "#085A55",
-          hover: "#07514D",
-          active: "#064844",
+          hover: "#085A55",
+          active: "#085A55",
           darker: "#031F1E",
           light: {
             DEFAULT: "#E6EFEE",
@@ -20,7 +20,7 @@ export default {
             hover: "#042826",
           },
         },
-        secondary: "#D9E41E",
+        secondary: "#D6DE21",
         success: "#018E51",
         danger: "#D11F54",
         warning: "#F7B307",
@@ -31,6 +31,18 @@ export default {
           DEFAULT: "#EFEFEF",
           dark: "#D6D6D6",
           footer: "#F9F9F9",
+        },
+        adminprimary: {
+          DEFAULT: "#212121",
+        },
+        customprimary: {
+          DEFAULT: "#085A55",
+        },
+        customsecondary: {
+          DEFAULT: "#212121",
+        },
+        paleyellow: {
+          DEFAULT: "#FBFCE9",
         },
       },
       boxShadow: {

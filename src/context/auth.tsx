@@ -10,7 +10,7 @@ const AuthProvider = ({ children }: { children: ReactNode | ReactNode[] }) => {
 
     const handleSetUser = async (user: IUser) => {
 
-        if (user.accessToken) {
+        if (user?.accessToken) {
             localStorage.setItem("nodesToken", user.accessToken)
         }
         setUser(user);

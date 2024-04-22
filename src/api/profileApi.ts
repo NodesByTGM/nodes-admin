@@ -29,7 +29,22 @@ export const profileApi: any = createApi({
         return {
           url: `${AppConfig.API_ENDPOINTS.Profile.UserProfile}`,
           method: "get",
-          
+        };
+      },
+    }),
+    getUserById: builder.query<any, any>({
+      query: ({ userId }) => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Profile.UserById}/${userId}`,
+          method: "get",
+        };
+      },
+    }),
+    getAllUsers: builder.query<any, any>({
+      query: () => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Profile.AllUsers}`,
+          method: "get",
         };
       },
     }),
@@ -45,4 +60,10 @@ export const profileApi: any = createApi({
   }),
 });
 
-export const { useGetTestQuery, useGetUserProfileQuery, useUpdateUserProfileMutation } = profileApi;
+export const {
+  useGetAllUsersQuery,
+  useGetUserByIdQuery,
+  useGetTestQuery,
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} = profileApi;

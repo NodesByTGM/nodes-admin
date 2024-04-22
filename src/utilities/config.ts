@@ -1,25 +1,32 @@
 export const BASE_API_ENDPOINT =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3001/api/v1"
-    : "https://nodes-server-v1.onrender.com/api/v1";
+    ? "https://dev.api.nodesafrica.com/api/v1"
+    : "https://dev.api.nodesafrica.com/api/v1";
 export const MAIN_APP_URL = "https://nodes.com";
 
 const API_ENDPOINTS = {
   Auth: {
     RegisterURL: `${BASE_API_ENDPOINT}/auth/register`,
-    LoginURL: `${BASE_API_ENDPOINT}/auth/login`,
+    LoginURL: `${BASE_API_ENDPOINT}/admin/auth/login`,
     LogoutURL: `${BASE_API_ENDPOINT}/auth/logout`,
-    ResetPasswordURL: `${BASE_API_ENDPOINT}/auth/reset-password`,
-    CheckResetLinkURL: `${BASE_API_ENDPOINT}/auth/check-reset-link`,
-    ForgotPasswordURL: `${BASE_API_ENDPOINT}/auth/forgot-password`,
-    ChangePasswordURL: `${BASE_API_ENDPOINT}/auth/change-password`,
+    ResetPasswordURL: `${BASE_API_ENDPOINT}/reset-password`,
+    CheckResetLinkURL: `${BASE_API_ENDPOINT}/admin/auth/check-reset-link`,
+    ForgotPasswordURL: `${BASE_API_ENDPOINT}/admin/auth/forgot-password`,
+    ChangePasswordURL: `${BASE_API_ENDPOINT}/admin/auth/change-password`,
     RefreshTokenURL: `${BASE_API_ENDPOINT}/auth/token`,
     SendOTP: `${BASE_API_ENDPOINT}/auth/send-otp`,
     VerfiyEmail: `${BASE_API_ENDPOINT}/auth/verify-email`,
     ProfileURL: `${BASE_API_ENDPOINT}/users/profile`,
+    GoogleSocial: `${BASE_API_ENDPOINT}/socialauth/google/auth`
+  },
+  Community: {
+    Post: `${BASE_API_ENDPOINT}/community/posts`,
   },
   Profile: {
     UserProfile: `${BASE_API_ENDPOINT}/users/profile`,
+    UserById: `${BASE_API_ENDPOINT}/users/:id`,
+    AllUsers: `${BASE_API_ENDPOINT}/users`,
+
   },
   Job: {
     JobUrl: `${BASE_API_ENDPOINT}/jobs`,
@@ -48,20 +55,58 @@ const API_ENDPOINTS = {
     GuestsURL: `${BASE_API_ENDPOINT}/events/guests/`,
   },
   Transactions: {
-    VerifyURL: `${BASE_API_ENDPOINT}/transactions/verify`, // /:description/:reference
+    VerifyURL: `${BASE_API_ENDPOINT}/transactions/verify/internal`, // /:description/:reference
   },
   Uploads: {
     UploadFile: `${BASE_API_ENDPOINT}/uploads/media`,
   },
+  Trending: {
+    Events: `${BASE_API_ENDPOINT}/trending`,
+    Movies: `${BASE_API_ENDPOINT}/movies-and-shows`,
+  },
 };
 
 const PATHS = {
+  Admin: {
+    Auth: {
+      Base: "/",
+      Default: "",
+      Signup: "/auth/signup",
+      Login: "/auth/login",
+      Register: "/auth/register",
+      ForgotPassword: "/auth/forgot-password",
+      ResetPassword: "/auth/reset-password/",
+      ResetPasswordWithParams: "/auth/reset-password/:accountId/:token",
+    },
+    Content: {
+      Base: "/admin/content",
+      Default: "",
+    },
+    UserDetails: {
+      Base: "/admin/user/:id",
+      Default: "",
+    },
+    User: {
+      Base: "/admin/user",
+      Default: "",
+    },
+    Subscription: {
+      Base: "/admin/subscription",
+      Default: "",
+    },
+    Analytics: {
+      Base: "/admin/analytics",
+      Default: "",
+    },
+  },
+
   Auth: {
     Login: "/auth/login",
     Register: "/auth/register",
     ForgotPassword: "/auth/forgot-password",
     ResetPassword: "/auth/reset-password/",
     ResetPasswordWithParams: "/auth/reset-password/:accountId/:token",
+    Google: "/socialauth/google",
   },
   Upgrades: {
     Talent: {
@@ -80,7 +125,10 @@ const PATHS = {
   },
   Business: {
     Base: "/business",
-    Dashboard: "",
+    Default: "",
+    Dashboard: "/business/dashboard",
+    Profile: "/business/profile",
+    EditProfile: "/business/edit-profile",
   },
 
   Dashboard: {
@@ -125,6 +173,7 @@ const PATHS = {
   Spaces: {
     Base: "/spaces",
     Overview: "",
+    Space: "/spaces/:id",
   },
   Subscription: {
     Base: "/subscription",
@@ -133,12 +182,15 @@ const PATHS = {
   },
   AccountSettings: {
     Base: "/settings",
-   
   },
   Career: "/career",
   Blog: "/blog",
   Partner: "/partner",
   GridTools: "/grid-tools",
+  Trending: {
+    Base: "/trending",
+    Overview: "",
+  },
   Terms: "/terms-and-conditions",
   Privacy: "/privacy-policy",
 };
@@ -304,6 +356,8 @@ const AppConfig = {
     SpaceName: "Enter the name of the space here",
     SpaceDescription: "What is this space about?",
     CardNumber: "1234 1234 1234 1234",
+    AddTitle: "Add a title",
+    WritePost: "What is your post...",
   },
   OTP_LENGTH: 4,
   OTP_COUNTDOWN: 300,
@@ -318,12 +372,26 @@ const AppConfig = {
     YEARS: YEARS.map((x) => ({ value: x, label: `${x}` })),
   },
   SKILL_OPTIONS: [
-    "Production assistant",
-    "Producer",
-    "Production manager",
-    "Project manager",
-    "Modelling",
-    "Video Editing",
+    // "Production assistant",
+    // "Producer",
+    // "Production manager",
+    // "Project manager",
+    // "Modelling",
+    // "Video Editing",
+    "Art Curator",
+    "Architect",
+    "Graphic Designer",
+    "Fashion Designer",
+    "Film Producer",
+    "Music Producer",
+    "Actor",
+    "Actress",
+    "Content writer",
+    "Visual Artist (Painter/Sculptor)",
+    "Jjournalist",
+    "Choreographer",
+    " Chef",
+    "Interior Decorator",
   ],
   PROFESSION_OPTIONS: ["Hiring manager", "Producer", "Director"],
   SUPPORTED_EXTENTIONS: {

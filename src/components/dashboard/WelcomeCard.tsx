@@ -20,10 +20,10 @@ export default function WelcomeCard({
   action,
 }: IWelcomeCardProps) {
   return (
-    <div className={"bg-[#ffffff] p-6 rounded-lg"}>
+    <div className={"bg-[#ffffff] p-6 rounded-lg h-full"}>
       <div
         style={{ backgroundImage: 'url("/img/WelcomeCardbgImg.png")' }}
-        className="flex flex-col"
+        className="flex flex-col h-full"
       >
         <div className="flex gap-6 mb-[103px] justify-between items-start">
           <span className="font-medium text-[18px] ">
@@ -31,19 +31,19 @@ export default function WelcomeCard({
           </span>
           <img src={icon} alt="" className="" />
         </div>
-        {action ? (
-          
-            <Button onClick={() => action()}>
+        <div className="mt-auto">
+          {action ? (
+            <Button className="bg-primary" onClick={() => action()}>
               <span className="text-base font-medium">{buttonText}</span>
             </Button>
-          
-        ) : (
-          <Link to={buttonLink}>
-            <Button>
-              <span className="text-base font-medium">{buttonText}</span>
-            </Button>
-          </Link>
-        )}
+          ) : (
+            <Link to={buttonLink}>
+              <Button className="bg-primary">
+                <span className="text-base font-medium">{buttonText}</span>
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

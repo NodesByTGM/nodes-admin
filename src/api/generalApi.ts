@@ -15,6 +15,38 @@ export const generalApi: any = createApi({
     }
   },
   endpoints: (builder) => ({
+    login: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Auth.LoginURL}`,
+          method: "post",
+          body: data,
+        };
+      },
+    }),
+    forgotPassword: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Auth.ForgotPasswordURL}`,
+          method: "post",
+          body: data,
+        };
+      },
+    }),
+
+    resetPassword: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Auth.ResetPasswordURL}/${data?.accountId}/${data?.token}`,
+          method: "post",
+          body: data.payload,
+        };
+      },
+    }),
+
+
+
+
   
     uploadFile: builder.mutation<any, any>({
       query: (data) => {
@@ -25,7 +57,9 @@ export const generalApi: any = createApi({
         };
       },
     }),
+
+   
   }),
 });
 
-export const { useUploadFileMutation } = generalApi;
+export const {  useResetPasswordMutation, useForgotPasswordMutation, useLoginMutation, useUploadFileMutation,  } = generalApi;

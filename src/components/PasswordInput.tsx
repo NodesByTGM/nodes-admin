@@ -15,17 +15,21 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   touched?: boolean;
   check?: boolean;
+  isAdmin?: boolean;
+  labelStyle?: string;
 }
 export default function Input({
   className = "",
   value = "",
   label = "Password",
+  labelStyle = "",
   // type,
   forgotPasswordLink = false,
   check = false,
   required = false,
   touched = false,
   error,
+  isAdmin = false,
 
   onChange,
   ...props
@@ -58,20 +62,24 @@ export default function Input({
   return (
     <div className="text-sm">
       <div className="flex justify-between font-medium mb-1">
-        <div>
+        <div className={labelStyle}>
           {label}
           {required ? "*" : null}
         </div>
         {forgotPasswordLink ? (
           <Link
-            to={AppConfig.PATHS.Auth.ForgotPassword}
+            to={
+              isAdmin
+                ? AppConfig.PATHS.Admin.Auth.ForgotPassword
+                : AppConfig.PATHS.Auth.ForgotPassword
+            }
             className="text-primary cursor-pointer"
           >
             Forgot?
           </Link>
         ) : null}
       </div>
-      <div className="flex justify-between items-center border gap-2 border-grey-dark transition-all focus-within:border-primary rounded-[5px] p-4">
+      <div className="flex justify-between items-center border gap-2 border-grey-dark transition-all focus-within:border-primary rounded-[8px] p-4">
         <input
           {...props}
           value={value}

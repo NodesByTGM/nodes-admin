@@ -123,7 +123,7 @@ function Select({
       onClick={toggleMenu}
       ref={wrapperRef}
     >
-      <div className='font-medium text-sm mb-1 hidden'>{label}</div>
+      <div className="font-medium text-sm mb-1 hidden">{label}</div>
       <div
         className={clsx(
           `flex justify-between items-center p-4- p-3.5 bg-transparent border border-grey-dark focus-visible:border-primary rounded-[5px]`,
@@ -168,7 +168,7 @@ function Select({
             {filtered.map((v, i: number) => (
               <li
                 key={i}
-                className="p-3 hover:bg-primary-light-hover cursor-pointer transition-all"
+                className="p-3 hover:bg-customsecondary-light-hover cursor-pointer transition-all"
                 onClick={() => handleSelect(v)}
               >
                 {v.label}
