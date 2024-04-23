@@ -8,7 +8,7 @@ import {
 } from "react";
 import { IProfileContext } from "../interfaces/profile";
 import { useGetUserProfileQuery } from "../api";
-import { AccountTypesObj, projectModalTypes } from "../utilities";
+import { projectModalTypes } from "../utilities";
 
 // import {
 //   // FormikHelpers,
@@ -53,7 +53,7 @@ const ProfileProvider = ({
   } = useGetUserProfileQuery();
 
   const user = useSelector((state: RootState) => state.user.user);
-  const [profileType, setProfileType] = useState("business");
+  const [profileType, setProfileType] = useState("");
   const [hasProject, setHasProject] = useState(false);
   const [projectDetailsModal, setProjectDetailsModal] = useState(false);
   const [editProjectModal, setEditProjectModal] = useState(false);
@@ -110,16 +110,16 @@ const ProfileProvider = ({
   );
 
   const handleAccountType = useCallback(() => {
-    const type = user?.type;
-    if (type == AccountTypesObj.individual) {
-      // setProfileType("individual");
+    const plan = user?.subscription?.plan?.toLowerCase();
+    if (plan !== "pro" && plan !== "business") {
+      setProfileType("individual");
     }
-    if (type == AccountTypesObj.talent) {
+    if (plan === "pro" || plan === 'business') {
       setProfileType("talent");
     }
-    if (type == AccountTypesObj.business) {
-      setProfileType("business");
-    }
+    // if (plan === "business") {
+    //   setProfileType("business");
+    // }
   }, [user]);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const ProfileProvider = ({
   return (
     <ProfileContext.Provider value={profileContextValue}>
       <div className="hidden">
-        <pre>{"Data:" + JSON.stringify(profileData, null, 2)}</pre>
+        <pre>{"Data:" + JSON.stringify(profileData?.result, null, 2)}</pre>
       </div>
       <div className="hidden">
         <pre className="Test-primary">
@@ -137,22 +137,22 @@ const ProfileProvider = ({
           Stuff: {JSON.stringify(user, null, 2)}
         </pre>
       </div>
-      <div className="flex gap-2 mb-4 ">
+      <div className="flex gap-2 mb-4 hidden">
         <button
           onClick={() => setProfileType("individual")}
-          className="px-4 py-2 rounded-md bg-primary text-white"
+          className="px-4 py-2 rounded-md bg-customsecondary text-white"
         >
           Switch to Individual
         </button>
         <button
           onClick={() => setProfileType("talent")}
-          className="px-4 py-2 rounded-md bg-primary text-white"
+          className="px-4 py-2 rounded-md bg-customsecondary text-white"
         >
           Switch to Talent
         </button>
         <button
           onClick={() => setProfileType("business")}
-          className="px-4 py-2 rounded-md bg-primary text-white"
+          className="px-4 py-2 rounded-md bg-customsecondary text-white"
         >
           Switch to Business
         </button>

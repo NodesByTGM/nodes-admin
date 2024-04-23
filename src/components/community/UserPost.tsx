@@ -60,14 +60,16 @@ const PictureIcon = () => {
 export default function UserPost({
   isReply,
   isAsk,
+  isAskMember,
 }: {
   isReply?: boolean;
   isAsk?: boolean;
+  isAskMember?: boolean;
 }) {
   return (
     <div>
       <div className="flex items-center justify-between">
-       <UserPostInitials />
+        <UserPostInitials />
         <div
           className={`${
             isReply
@@ -85,19 +87,18 @@ export default function UserPost({
               Ask for help from the community...
             </span>
           ) : null}
+          {isAskMember ? (
+            <span className="font-medium text-base text-[#000000] mr-10">
+              Ask the members a question...
+            </span>
+          ) : null}
 
           <div className="flex items-center justify-between gap-4 ">
             <PaperClip />
             <PictureIcon />
             <Button className={`max-w-max`}>
-              {
-                isReply && <span className="">Reply</span>
-              }
-                {
-                isAsk && <span className="">Post</span>
-              }
-          
-            
+              {isReply && <span className="">Reply</span>}
+              {isAsk && <span className="">Post</span>}
             </Button>
           </div>
         </div>

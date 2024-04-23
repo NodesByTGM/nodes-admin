@@ -4,9 +4,9 @@ export interface IProfileContext {
   setProfileType: (e) => void;
   hasProject: boolean;
   setHasProject: (e) => void;
-  projectDetailsModal: boolean;
   jobModal: boolean;
   setJobModal: (e) => void;
+  projectDetailsModal: boolean;
   setProjectDetailsModal: (e) => void;
   projectDetails: any;
   setProjectDetails: (e) => void;

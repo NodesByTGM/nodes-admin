@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { BookMarkIcon, Button } from "../../components";
 import { LiaTimesSolid } from "react-icons/lia";
@@ -7,7 +8,7 @@ import { PiSuitcase } from "react-icons/pi";
 import { formatDate } from "../../utilities";
 import { useApplyToJobMutation, useSaveJobMutation } from "../../api";
 import { toast } from "react-toastify";
-export default function JobPost({ closeModal, details }) {
+export default function JobPost({ closeModal, details, refetchJobs= ()  => {}}: {closeModal: any, details: any, refetchJobs?: () => void}) {
   const [
     applyToJob,
     {
@@ -45,6 +46,7 @@ export default function JobPost({ closeModal, details }) {
 
   useEffect(() => {
     if (applyToJobIsSuccess) {
+      refetchJobs()
       closeModal()
       toast.success("Job application sent");
     }

@@ -26,8 +26,8 @@ function TalentReviewCard({
     twitter = '',
     showDetails = true }: TalentReviewCardProps) {
     return (
-        <div className="flex flex-col justify-center mt-32 items-center">
-            <div className="bg-white p-10 mb-10 rounded-[5px] lg:min-w-[464px]">
+        <div className="z-20 flex flex-col justify-center mt-32 items-center">
+            <div className="z-20 bg-white p-10 mb-10 rounded-[5px] lg:min-w-[464px]">
 
                 <div className="flex flex-col gap-5 justify-center items-center">
                     <img alt=""

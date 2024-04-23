@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef, MutableRefObject } from "react";
 import { useUploadFileMutation } from "../api";
-import { convertToBase64 } from "../utilities/common";
-// import AppConfig from "../utilities/config";
+import { convertToBase64, checkFileSize } from "../utilities/common";
+import AppConfig from "../utilities/config";
 // import { mainClient } from "../utilities/client";
 // import AppConfig from "../utilities/config";
 import { Loader } from "../components";
@@ -47,6 +47,15 @@ export default function ProjectFileUpload({
   const handleFileUpload = (e: any) => {
     const files = e.target.files;
     console.log("My upload: " + JSON.stringify(files), null, 2);
+    if (!files || files.length === 0) {
+      return;
+    }
+    if (!checkFileSize(files[0])) {
+      toast.error(
+        `File selected exceeded file limit size of ${AppConfig.FILE_SIZE_LIMIT}mb`
+      );
+      return;
+    }
     setSelectedFile(files[0]);
   };
 
@@ -69,10 +78,12 @@ export default function ProjectFileUpload({
 
   useEffect(() => {
     if (uploadFileSuccess) {
-      onChange(uploadResponse?.data);
+      console.log("Data: " + JSON.stringify(uploadResponse, null, 2));
+
+      onChange(uploadResponse?.result);
     }
     // alert(JSON.stringify(uploadResponse?.data, null, 2))
-  }, [uploadFileSuccess]);
+  }, [uploadFileSuccess, uploadResponse]);
 
   useEffect(() => {
     if (isUploadError) {
@@ -83,13 +94,14 @@ export default function ProjectFileUpload({
   const setBgImg = () => {
     return {
       backgroundRepeat: "no-repeat",
-      // -webkit-background-size: cover;
-      // -moz-background-size: cover;
-      // -o-background-size: cover;
+      "-webkit-background-size": "cover",
+      " -moz-background-size": "cover",
+      "-o-background-size": "cover",
       backgroundSize: "cover",
-      backgroundAttachment: "fixed",
+      // backgroundAttachment: "fixed",
       backgroundPosition: "center",
       backgroundImage: "url(" + value + ")",
+      "object-fit": "cover",
     };
   };
 
@@ -104,7 +116,7 @@ export default function ProjectFileUpload({
       <div
         onClick={() => inputRef.current?.click()}
         style={setBgImg()}
-        className="border-dash cursor-pointer flex flex-col gap-[10px] px-6 py-[53px] rounded-[5px] items-center justify-center"
+        className="border-dash bg-cover cursor-pointer flex flex-col gap-[10px] px-6 py-[53px] rounded-[5px] items-center justify-center"
       >
         {uploadFileLoading ? (
           <div className="">

@@ -194,7 +194,6 @@ export default function EventPostForm({
             />
           </div>
 
-      
           <div className="grid grid-cols-2 gap-4">
             <div className="w-full col-span-2">
               <DateSelect
@@ -254,7 +253,7 @@ export default function EventPostForm({
                 <div
                   className={`${
                     values?.paymentType.toLowerCase() == "free"
-                      ? "bg-primary text-white"
+                      ? "bg-customsecondary text-white"
                       : "bg-white"
                   }  size-5 rounded-sm border flex items-center justify-center `}
                 >
@@ -270,7 +269,7 @@ export default function EventPostForm({
                 <div
                   className={`${
                     values?.paymentType.toLowerCase() == "paid"
-                      ? "bg-primary text-white"
+                      ? "bg-customsecondary text-white"
                       : "bg-white"
                   } size-5 rounded-sm border flex items-center justify-center `}
                 >

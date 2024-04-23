@@ -13,6 +13,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   labelStyle?: string;
   value?: string;
+  min?: string;
+  max?: string;
 }
 export default function DateSelect({
   className = "",
@@ -26,6 +28,8 @@ export default function DateSelect({
   width,
   disabled,
   labelStyle,
+  min = "",
+  max = "",
   ...props
 }: InputProps) {
   // const [defaultVal, setDefaultVal] = useState('');
@@ -46,6 +50,9 @@ export default function DateSelect({
       ) : null}
       <input
         type="date"
+        id="date"
+        min={min}
+        max={max}
         disabled={disabled}
         value={value}
         onChange={onChange}

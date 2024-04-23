@@ -1,8 +1,12 @@
 import React from "react";
 
-export default function SectionNavs({ navs, setSelectedNav, selectedNav }) {
+export default function SectionNavs({
+  navs,
+  setSelectedNav,
+  selectedNav,
+}) {
   return (
-    <div>
+    <div >
       {" "}
       <div className="flex items-center  gap-[8px] overflow-x-auto  ">
         {navs.map((nav) => (

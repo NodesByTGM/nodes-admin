@@ -15,7 +15,7 @@ export default function BusunessId() {
         Year of Establishment
       </span>
       <div className="mb-6 font-normal text-base text-[#000000] flex justify-center gap-1">
-        <span className="font-medium">0 </span>followers
+        <span className="font-medium">0 </span>connections
       </div>
     </div>
   );

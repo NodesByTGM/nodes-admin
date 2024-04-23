@@ -176,7 +176,7 @@ export default function DetailsActions({
         <EventPostForm
           details={details}
           refetchEvents={eventsRefetch}
-          closeModal={() => setEditJobOpen(false)}
+          closeModal={() => setEditEventOpen(false)}
         />
       </Modal>
     </div>

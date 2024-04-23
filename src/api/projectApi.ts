@@ -25,6 +25,15 @@ export const projectApi: any = createApi({
         };
       },
     }),
+    getMyProjects: builder.query<any, any>({
+      query: () => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Project.Projects}/mine`,
+          method: "get",
+          
+        };
+      },
+    }),
     createUserProject: builder.mutation<any, any>({
       query: (data) => {
         return {
@@ -37,4 +46,4 @@ export const projectApi: any = createApi({
   }),
 });
 
-export const { useGetUserProjectsQuery, useCreateUserProjectMutation } = projectApi;
+export const { useGetMyProjectsQuery, useGetUserProjectsQuery, useCreateUserProjectMutation } = projectApi;

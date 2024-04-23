@@ -102,7 +102,7 @@ function Header() {
     };
   }, []);
   return (
-    <div className="z-[99] relative main-bg pt-8  px-10 w-full flex justify-end items-center  ">
+    <div className={`z-[99] relative main-bg-gray pt-8  px-10 w-full flex justify-end items-center `}>
       <div className=" gap-4 items-center hidden">
         <Menu className="w-[50px] cursor-pointer" />
         <div className="flex items-center gap-2">
@@ -149,15 +149,15 @@ function Header() {
           {menuOpened ? (
             <div className="shadow-normal border rounded-lg bg-white w-[200px] absolute right-4 top-14">
               <Link to={"/settings"}>
-                <div className="flex items-center gap-2 p-2 hover:bg-primary-light opacity-70 hover:opacity-100 transition-all ">
+                <div className="flex items-center gap-2 p-2 hover:bg-customsecondary-light opacity-70 hover:opacity-100 transition-all ">
                   <Settings /> <span>Settings</span>
                 </div>
               </Link>
-              <div className="flex items-center gap-2 p-2 hover:bg-primary-light opacity-70 hover:opacity-100 transition-all ">
+              <div className="flex items-center gap-2 p-2 hover:bg-customsecondary-light opacity-70 hover:opacity-100 transition-all ">
                 <Flag /> <span>Report Issue</span>
               </div>
               <LogoutComponent>
-                <div className="flex items-center gap-2 p-2 hover:bg-primary-light opacity-70 hover:opacity-100 transition-all ">
+                <div className="flex items-center gap-2 p-2 hover:bg-customsecondary-light opacity-70 hover:opacity-100 transition-all ">
                   <LogOut /> <span>Sign Out</span>
                 </div>
               </LogoutComponent>
@@ -209,13 +209,13 @@ export default Header;
 {
   /* <div className="absolute bg-black bg-opacity-30 z-10 p-12 pr-5 top-2 right-0 group">
 <div className="shadow-normal border rounded-lg bg-white w-[200px] hidden">
-    <div className="flex items-center gap-2 p-2 hover:bg-primary-light opacity-70 hover:opacity-100 transition-all ">
+    <div className="flex items-center gap-2 p-2 hover:bg-customsecondary-light opacity-70 hover:opacity-100 transition-all ">
         <Settings /> <span>Settings</span>
     </div>
-    <div className="flex items-center gap-2 p-2 hover:bg-primary-light opacity-70 hover:opacity-100 transition-all ">
+    <div className="flex items-center gap-2 p-2 hover:bg-customsecondary-light opacity-70 hover:opacity-100 transition-all ">
         <Flag /> <span>Report Issue</span>
     </div>
-    <div className="flex items-center gap-2 p-2 hover:bg-primary-light opacity-70 hover:opacity-100 transition-all ">
+    <div className="flex items-center gap-2 p-2 hover:bg-customsecondary-light opacity-70 hover:opacity-100 transition-all ">
         <LogOut /> <span>Sign Out</span>
     </div>
 </div>

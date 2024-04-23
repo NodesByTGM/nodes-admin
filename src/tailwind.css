@@ -18,8 +18,24 @@
   @apply bg-[#FDFDF7] py-[64px] pl-[40px] pr-[40px];
 }
 
+.main-bg-gray-container {
+  @apply bg-[#FBFBFB] pt-4 pb-[64px] ;
+}
+
+.main-padding {
+  @apply pl-[40px] pr-[40px]
+}
+
 .main-bg {
   @apply bg-[#FDFDF7];
+}
+
+.main-bg-gray{
+@apply bg-[#FBFBFB]
+}
+
+.admin-main-plain-container {
+  @apply border border-[#F2F2F2] rounded-[16px] bg-[#ffffff] py-[64px] pl-[40px] pr-[40px];
 }
 
 .profile-card-shadow {
@@ -40,7 +56,29 @@
 }
 
 .navLink {
-  @apply flex gap-4 items-center active:bg-primary active:text-white hover:bg-primary hover:text-white transition-all px-4 py-2 rounded;
+  @apply flex gap-4 items-center active:bg-customsecondary active:text-white hover:bg-customsecondary hover:text-white transition-all px-4 py-2 rounded;
+}
+.childNavLink {
+  @apply flex gap-4 items-center active:bg-secondary active:text-primary hover:bg-secondary hover:text-white transition-all px-4 py-2 rounded;
+}
+.authNavLink {
+  @apply flex gap-4 items-center active:bg-[#212121] active:text-white hover:bg-[#212121] hover:text-white transition-all px-4 py-2 rounded;
+}
+
+.auth-onboarding-bgImg {
+  background-image: url("/img/TalentOnboardingBg.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-position: center;
+}
+
+.auth-onboarding {
+  background-color: #fbfce9;
 }
 
 /* .profile-forms-section {

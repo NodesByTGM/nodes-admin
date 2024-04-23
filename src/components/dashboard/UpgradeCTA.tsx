@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "../../components";
-
+import {useNavigate} from 'react-router-dom'
 export default function UpgradeCTA() {
+  const navigate = useNavigate()
   return (
  <div className="relative">
        <div className=" mx-auto mt-[24px] mb-[51px] max-w-[360px] flex flex-col items-center justify-center">
@@ -13,7 +14,7 @@ export default function UpgradeCTA() {
       </p>
 
 
-      <Button className={'max-w-[196px]'}>Upgrade your account</Button>
+      <Button onClick={() => navigate('/subscription')} className={'max-w-[196px]'}>Upgrade your account</Button>
     </div>
     <img src="/img/dashboardctabg.png" alt="" className="absolute top-0 bottom-0" />
 

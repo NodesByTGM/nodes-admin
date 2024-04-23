@@ -23,6 +23,14 @@ export const jobAndEventsApi: any = createApi({
         };
       },
     }),
+    getMyJobs: builder.query<any, any>({
+      query: () => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Job.JobUrl}/mine`,
+          method: "get",
+        };
+      },
+    }),
 
     getAppliedJobs: builder.query<any, any>({
       query: () => {
@@ -115,6 +123,14 @@ export const jobAndEventsApi: any = createApi({
       query: () => {
         return {
           url: `${AppConfig.API_ENDPOINTS.Events.BaseURL}`,
+          method: "get",
+        };
+      },
+    }),
+    getMyEvents: builder.query<any, any>({
+      query: () => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Events.BaseURL}/mine`,
           method: "get",
         };
       },
@@ -217,6 +233,7 @@ export const jobAndEventsApi: any = createApi({
 });
 
 export const {
+  useGetMyJobsQuery,
   useGetJobsQuery,
   useGetAppliedJobsQuery,
   useGetJobByIdQuery,
@@ -225,6 +242,7 @@ export const {
   useApplyToJobMutation,
   useDeleteJobMutation,
   useEditJobMutation,
+  useGetMyEventsQuery,
   useGetEventsQuery,
   useGetBusinessUserEventsQuery,
   useCreateEventMutation,
