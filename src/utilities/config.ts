@@ -22,6 +22,7 @@ const API_ENDPOINTS = {
   Community: {
     Post: `${BASE_API_ENDPOINT}/community/posts`,
   },
+
   Profile: {
     UserProfile: `${BASE_API_ENDPOINT}/users/profile`,
     UserById: `${BASE_API_ENDPOINT}/users/:id`,
@@ -67,6 +68,17 @@ const API_ENDPOINTS = {
     GeneralContents: `${BASE_API_ENDPOINT}/cms/contents`,
     Admin: `${BASE_API_ENDPOINT}/cms/admin/contents`,
   },
+  Users: {
+    BaseUrl: `${BASE_API_ENDPOINT}/admin/users`,
+  },
+  Members: {
+    BaseUrl: `${BASE_API_ENDPOINT}/admin/members`,
+
+  },
+  Subscription: {
+    BaseUrl: `${BASE_API_ENDPOINT}/admin/subscriptions`,
+
+  }
 };
 
 const PATHS = {

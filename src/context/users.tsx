@@ -11,7 +11,7 @@ export const UsersContext = createContext<IUsersContext>(initialState);
 
 const UsersProvider = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const user = useSelector((state: RootState) => state.user.user);
-  const [pageName] = useState("Dashboard");
+  const [pageName] = useState("Users");
   const usersContextValue = useMemo(
     () => ({
       pageName,

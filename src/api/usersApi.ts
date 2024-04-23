@@ -24,9 +24,25 @@ export const usersApi: any = createApi({
         };
       },
     }),
+    getUsers: builder.query<any, any>({
+      query: () => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Users.BaseUrl}`,
+          method: "get",
+        };
+      },
+    }),
+    getMembers: builder.query<any, any>({
+      query: () => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Members.BaseUrl}`,
+          method: "get",
+        };
+      },
+    }),
    
   }),
 });
 
-export const { useUserPostMutation,  } =
+export const { useGetUsersQuery, useGetMembersQuery, useUserPostMutation,  } =
   usersApi;

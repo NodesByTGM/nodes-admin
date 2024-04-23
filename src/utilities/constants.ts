@@ -395,3 +395,9 @@ export const carouselImages = [
     url: "/imgUi/woman-promoting-cloths-from-thrift-store.jpg",
   },
 ];
+
+export const AccountTypesEnum = {
+  0: 'individual',
+  1: 'talent',
+  2: 'business',
+};
