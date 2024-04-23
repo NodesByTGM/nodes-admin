@@ -27,6 +27,18 @@ export const checkFileSize = (file: File) => {
   return true;
 };
 
+export const getAge = (DOB: any) => {
+  const birthDate: Date = new Date(DOB);
+  const currentDate: Date = new Date();
+  
+  // Calculate the difference in milliseconds between the current date and the birth date
+  const ageDiffMs: number = currentDate.getTime() - birthDate.getTime();
+  
+  // Convert milliseconds to years
+  const ageDate: Date = new Date(ageDiffMs);
+  const age: number = Math.abs(ageDate.getUTCFullYear() - 1970);
+  return age
+};
 
 
 export const getNameInitials = (name: string): string => {

@@ -113,6 +113,10 @@ const PATHS = {
       Base: "/admin/analytics",
       Default: "",
     },
+    TeamManagement: {
+      Base: "/admin/team-management",
+      Default: "",
+    },
   },
 
   Auth: {

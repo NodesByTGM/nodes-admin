@@ -13,3 +13,5 @@ export {default as AdminUserDetails } from './User/UserDetails.tsx'
 export {default as AdminUserDetailsBase } from './User/UserDetailsBase.tsx'
 export { default as AdminAnalytics } from "./Analytics/Analytics";
 export { default as AdminAnalyticsBase } from "./Analytics/AnalyticsBase";
+export { default as AdminTeamManagement } from "./TeamManagement/TeamManagement";
+export { default as AdminTeamManagementBase } from "./TeamManagement/TeamManagementBase";

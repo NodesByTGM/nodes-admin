@@ -35,7 +35,7 @@ export const profileApi: any = createApi({
     getUserById: builder.query<any, any>({
       query: ({ userId }) => {
         return {
-          url: `${AppConfig.API_ENDPOINTS.Profile.UserById}/${userId}`,
+          url: `${AppConfig.API_ENDPOINTS.Profile.AllUsers}/${userId}`,
           method: "get",
         };
       },

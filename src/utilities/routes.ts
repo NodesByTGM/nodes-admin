@@ -16,6 +16,8 @@ import {
   AdminUserDetailsBase,
   AdminAnalytics,
   AdminAnalyticsBase,
+  AdminTeamManagement,
+  AdminTeamManagementBase,
 } from "../pagesAdmin";
 import AppConfig from "./config";
 
@@ -106,4 +108,16 @@ export const adminMainRoutes: RouteObject[] = [
       },
     ],
   },
+  {
+    path: AppConfig.PATHS.Admin.TeamManagement.Base,
+    Component: AdminTeamManagementBase,
+    children: [
+      {
+        path: AppConfig.PATHS.Admin.TeamManagement.Default,
+        Component: AdminTeamManagement,
+      },
+    ],
+  },
+
+
 ];

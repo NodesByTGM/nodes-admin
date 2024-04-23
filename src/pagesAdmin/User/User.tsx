@@ -43,7 +43,7 @@ export default function User() {
       {selectedNav.label.toLowerCase() == "active" && <Active useQuery={useGetUsersQuery}/>}
       {selectedNav.label.toLowerCase() == "deleted" && (
         <div>
-          <DeletedUsers />
+          <DeletedUsers useQuery={useGetUsersQuery} />
         </div>
       )}
     </div>

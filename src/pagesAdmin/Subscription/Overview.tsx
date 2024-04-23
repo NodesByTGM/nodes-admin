@@ -1,7 +1,17 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from "react";
 import { AdminPeriodFilter, AdminStat } from "../../components";
+import {Loader} from '../../components'
+export default function Overview({ useQuery }) {
+  const {
+    data: subscriptionsResponse,
+    isSuccess: subscriptionsisSuccess,
+    // refetch: subscriptionsRefetch,
+    isFetching: subscriptionsLoading,
+  } = useQuery();
+  const [subscriptionList, setSubscriptionList] = useState<any>([]);
 
-export default function Overview() {
+
   const periods = [
     {
       label: "Today",
@@ -27,15 +37,15 @@ export default function Overview() {
   ];
   const [selectedPeriod, setSelectedPeriod] = useState(periods[0]);
 
-  const contentList = [
-    {
-      id: 1,
-      name: "Pro",
-      billingDate: "Description stuff",
-      plan: "Admin",
-      status: "Active",
-    },
-  ];
+  // const subscriptionList = [
+  //   {
+  //     id: 1,
+  //     name: "Pro",
+  //     billingDate: "Description stuff",
+  //     plan: "Admin",
+  //     status: "Active",
+  //   },
+  // ];
 
   const stats = [
     {
@@ -67,6 +77,12 @@ export default function Overview() {
       percentage: 40,
     },
   ];
+
+  useEffect(() => {
+    if (subscriptionsisSuccess && subscriptionsResponse?.result?.items?.length > 0) {
+      setSubscriptionList(subscriptionsResponse?.result.items);
+    }
+  }, [subscriptionsisSuccess, subscriptionsResponse]);
   return (
     <div>
       <div className="mb-[28px] justify-end flex">
@@ -92,7 +108,12 @@ export default function Overview() {
           <span className="text-[#0C5C56]">View all</span>
         </div>
         <div className=" py-6">
-          {contentList?.length > 0 ? (
+        {subscriptionsLoading && subscriptionList.length === 0 ? (
+          <div className="my-40">
+            <Loader />
+          </div>
+        ) : null}
+          {subscriptionList?.length > 0 ? (
             <div className="flow-root">
               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -103,7 +124,7 @@ export default function Overview() {
                           scope="col"
                           className="uppercase pt-6 pb-4 pl-4 pr-3 text-left text-sm font-medium text-[#757575] sm:pl-0"
                         >
-                         <span className="pl-6"> Name</span>
+                          <span className="pl-6"> Name</span>
                         </th>
 
                         <th
@@ -122,7 +143,6 @@ export default function Overview() {
                           scope="col"
                           className="uppercase px-3 pt-6 pb-4 text-left text-sm font-medium text-[#757575]"
                         >
-                          
                           <span className="pr-6"> Status</span>
                         </th>
 
@@ -135,12 +155,10 @@ export default function Overview() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#D9D9D9]">
-                      {contentList?.map((item) => (
+                      {subscriptionList?.map((item) => (
                         <tr key={item.id}>
                           <td className="whitespace-nowrap py-8 pl-4 pr-3 text-base font-normal text-[#212121] sm:pl-0">
-                           
-                            <span className="pl-6">  {item.name}</span>
-
+                            <span className="pl-6"> {item.name}</span>
                           </td>
 
                           <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
@@ -153,9 +171,7 @@ export default function Overview() {
 
                           <td className="relative whitespace-nowrap py-8 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
                             <span className="text-primary hover:text-primary font-medium text-sm">
-                           
-                              <span className="pr-6">     {item.status}</span>
-
+                              <span className="pr-6"> {item.status}</span>
                             </span>
                           </td>
                         </tr>

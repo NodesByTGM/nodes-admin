@@ -1,4 +1,4 @@
-import { CreditCard, BarChart, File, User } from "react-feather";
+import { CreditCard, BarChart, File, User, Users } from "react-feather";
 import { NavLink } from "react-router-dom";
 import AppConfig from "../../utilities/config";
 import { SearchComponent, SidebarMenu } from "../../components";
@@ -25,6 +25,13 @@ function Sidebar() {
       icon: <BarChart />,
       path: AppConfig.PATHS.Admin.Analytics.Base,
     },
+    {
+      name: "Team",
+      icon: <Users />,
+      path: AppConfig.PATHS.Admin.TeamManagement.Base,
+    },
+
+    
   ];
   return (
     <div className="bg-[#FBFBFB] w-full transition-all duration-300 h-full  px-6 overflow-y-auto">

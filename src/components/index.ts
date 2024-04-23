@@ -114,3 +114,5 @@ export { default as ProjectCard2 } from "./profile/ProjectCard2.tsx";
 export { default as RateComponent } from "./RateComponent";
 export { default as RatingStar } from "./RatingStar";
 export { default as SidebarMenu } from "./SidebarMenu";
+export { default as LoadingInputs } from "./LoadingInputs";
+

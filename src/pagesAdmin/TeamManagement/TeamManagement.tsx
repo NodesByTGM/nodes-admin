@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Loader } from "../../components";
-import { AccountTypesEnum } from "../../utilities/constants";
 import moment from "moment";
-export default function Active({ useQuery }) {
-  const navigate = useNavigate();
+import { AdminPageHeader, Button } from "../../components";
+import { useGetUsersQuery } from "../../api";
+
+export default function TeamManagement() {
   const [usersData, setUsersData] = useState<any>([]);
 
   const {
     data: usersResponse,
     // refetch: usersRefetch,
     isFetching: usersLoading,
-  } = useQuery();
+  } = useGetUsersQuery();
 
   // const usersData = [
   //   {
@@ -39,6 +39,16 @@ export default function Active({ useQuery }) {
   }, [usersResponse]);
   return (
     <div>
+      <div className="flex justify-between mb-[26px]">
+        <div className="w-full flex items-center justify-between">
+          <AdminPageHeader
+            title="Team"
+            subTitle="Something something about user management"
+          />
+          <Button className="max-w-max !bg-customprimary">Invite User</Button>
+        </div>
+      </div>
+      <div>
       <div className="border-t border-[#D9D9D9]"></div>
 
       <div className=" py-6">
@@ -60,12 +70,18 @@ export default function Active({ useQuery }) {
                       >
                         Fullname
                       </th>
+                      <th
+                        scope="col"
+                        className="uppercase px-3 pt-6 pb-4 text-left text-sm font-medium text-[#757575]"
+                      >
+                        Email Address
+                      </th>
 
                       <th
                         scope="col"
                         className="uppercase px-3 pt-6 pb-4 text-left text-sm font-medium text-[#757575]"
                       >
-                        Username
+                        Role
                       </th>
                       <th
                         scope="col"
@@ -73,17 +89,12 @@ export default function Active({ useQuery }) {
                       >
                         Date Joined
                       </th>
+                   
                       <th
                         scope="col"
                         className="uppercase px-3 pt-6 pb-4 text-left text-sm font-medium text-[#757575]"
                       >
-                        Email Address
-                      </th>
-                      <th
-                        scope="col"
-                        className="uppercase px-3 pt-6 pb-4 text-left text-sm font-medium text-[#757575]"
-                      >
-                        Category
+                        Action
                       </th>
 
                       {/* <th
@@ -97,29 +108,30 @@ export default function Active({ useQuery }) {
                   <tbody className="divide-y divide-[#D9D9D9]">
                     {usersData?.map((item) => (
                       <tr
-                        onClick={() => navigate(`/admin/user/${item.id}`)}
-                        className="cursor-pointer"
+                        className=""
                         key={item.id}
                       >
                         <td className="capitalise whitespace-nowrap py-8 pl-4 pr-3 text-base font-normal text-[#212121] sm:pl-0">
                           {item.name}
                         </td>
 
+                        <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
+                          {item.email}
+                        </td>
+
                         <td className="capitalise whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
-                          {item.username}
+                          {item.role ? item.role : '--'}
                         </td>
 
                         <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
                           {moment(item.dateJoined).format("DD/MM/yyyy")}
                         </td>
 
-                        <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
-                          {item.email}
-                        </td>
+                     
 
-                        <td className="relative whitespace-nowrap py-8 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
-                          <span className="uppercase text-primary hover:text-primary font-medium text-sm">
-                            {AccountTypesEnum[item.type]}
+                        <td className="cursor-pointer relative whitespace-nowrap py-8 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
+                          <span className=" underline text-primary hover:text-primary font-medium text-sm">
+                            Edit
                           </span>
                         </td>
                       </tr>
@@ -135,6 +147,7 @@ export default function Active({ useQuery }) {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }
