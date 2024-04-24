@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { AdminPeriodFilter, AdminStat } from "../../components";
 import {Loader} from '../../components'
+import moment from 'moment'
 export default function Overview({ useQuery }) {
   const {
     data: subscriptionsResponse,
@@ -158,11 +159,11 @@ export default function Overview({ useQuery }) {
                       {subscriptionList?.map((item) => (
                         <tr key={item.id}>
                           <td className="whitespace-nowrap py-8 pl-4 pr-3 text-base font-normal text-[#212121] sm:pl-0">
-                            <span className="pl-6"> {item.name}</span>
+                            <span className="pl-6"> {item.name ? item.name : '--'}</span>
                           </td>
 
                           <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
-                            {item.billingDate}
+                            {moment(item.paidAt).format('DD/MM/yyyy')}
                           </td>
 
                           <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
@@ -171,7 +172,7 @@ export default function Overview({ useQuery }) {
 
                           <td className="relative whitespace-nowrap py-8 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
                             <span className="text-primary hover:text-primary font-medium text-sm">
-                              <span className="pr-6"> {item.status}</span>
+                              <span className="pr-6"> {item.active === true ? 'Active' : 'Inactive'}</span>
                             </span>
                           </td>
                         </tr>

@@ -363,3 +363,45 @@ export type AccountSettingsValidationType = {
   year: string;
   visibility: string;
 };
+
+export const contentSchema = object({
+  title: string().required("Title is a required field"),
+  lastEdited: string(),
+  thumbnail: object().shape({
+    id: string(),
+    url: string(),
+  }),
+  category: string(),
+  description: string(),
+  status: string(),
+});
+
+export type ContentValidationType = {
+  title: string;
+  lastEdited: string;
+  thumbnail: {
+    id: string;
+    url: string;
+  };
+  category: string;
+  description: string;
+  status: string;
+};
+
+export const adminUserProfileSchema = object({
+  name: string(),
+  username: string(),
+  email: string(),
+  createdAt: string(),
+  category: string(),
+  subscription: string(),
+});
+
+export type AdminUserProfileValidationType = {
+  name: string;
+  username: string;
+  email: string;
+  createdAt: string;
+  category: string;
+  subscription: string;
+};

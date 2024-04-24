@@ -25,6 +25,7 @@ export const contentApi: any = createApi({
         };
       },
     }),
+
     getContentsForAdmin: builder.query<any, any>({
       query: (params) => {
         return {
@@ -32,6 +33,15 @@ export const contentApi: any = createApi({
             cleanObject(params)
           )}`,
           method: "get",
+        };
+      },
+    }),
+    getContentById: builder.query<any, any>({
+      query: (data) => {
+        return {
+          url: `${AppConfig.API_ENDPOINTS.Content.Admin}/${data?.id}`,
+          method: "get",
+         
         };
       },
     }),
@@ -57,6 +67,7 @@ export const contentApi: any = createApi({
 });
 
 export const {
+  useGetContentByIdQuery,
   useGetContentsQuery,
   useGetContentsForAdminQuery,
   useCreateContentForAdminMutation,

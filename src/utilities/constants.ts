@@ -249,7 +249,7 @@ export const planObj = {
       navigate("/subscription/pro" + `?isCurrentPlan=${isCurrentPlan}`);
     },
     monthlyAction: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/pro"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate("/subscription/pro" + `?isCurrentPlan=${isCurrentPlan}`);
     },
     param: "pro",
   },
@@ -271,10 +271,10 @@ export const planObj = {
       ...pricing.business,
     },
     action: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/business"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate("/subscription/business" + `?isCurrentPlan=${isCurrentPlan}`);
     },
     monthlyAction: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/business"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate("/subscription/business" + `?isCurrentPlan=${isCurrentPlan}`);
     },
     param: "business",
   },
@@ -295,10 +295,10 @@ export const planObj = {
       ...pricing.pro,
     },
     action: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/pro-monthly"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate("/subscription/pro-monthly" + `?isCurrentPlan=${isCurrentPlan}`);
     },
     monthlyAction: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/pro-monthly"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate("/subscription/pro-monthly" + `?isCurrentPlan=${isCurrentPlan}`);
     },
     param: "pro-monthly",
   },
@@ -320,10 +320,14 @@ export const planObj = {
       ...pricing.business,
     },
     action: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/business-monthly"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate(
+        "/subscription/business-monthly" + `?isCurrentPlan=${isCurrentPlan}`
+      );
     },
     monthlyAction: (navigate, isCurrentPlan = false) => {
-      navigate("/subscription/business-monthly"+ `?isCurrentPlan=${isCurrentPlan}`);
+      navigate(
+        "/subscription/business-monthly" + `?isCurrentPlan=${isCurrentPlan}`
+      );
     },
     param: "business-monthly",
   },
@@ -397,7 +401,13 @@ export const carouselImages = [
 ];
 
 export const AccountTypesEnum = {
-  0: 'individual',
-  1: 'talent',
-  2: 'business',
+  0: "individual",
+  1: "talent",
+  2: "business",
 };
+
+export const ContentCategories = [
+  { id: "Hidden Gems", name: "Hidden Gems" },
+  { id: "Birthdays", name: "Birthdays" },
+  { id: "Trending News", name: "Trending News" },
+];
