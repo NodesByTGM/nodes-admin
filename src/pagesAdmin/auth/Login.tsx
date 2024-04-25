@@ -10,10 +10,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/reducers/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 
-import {
-  // FormikHelpers,
-  useFormik,
-} from "formik";
+import { useFormik } from "formik";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -148,7 +145,7 @@ export default function Login() {
             Sign In
           </Button>
 
-          <div className="text-center">
+          <div className="text-center hidden">
             New to Nodes?{" "}
             <Link to={"/admin/auth/signup"} className="text-primary">
               Sign Up

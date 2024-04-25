@@ -1,17 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AdminPageHeader, AdminPageNav, Loader } from "../../components";
 import { useContentContext } from "../../context/hooks";
 import { useGetContentsForAdminQuery } from "../../api";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 export default function Content() {
   const { pageName, user } = useContentContext();
-  const [contentData, setContentData] = useState<any>([]);
+  const navigate = useNavigate();
+  const [query, setQuery] = useState({
+    status: "",
+    category: "",
+  });
 
+ 
   const {
     data: contentResponse,
-    // refetch: contentRefetch,
+    refetch: contentRefetch,
     isFetching: contentLoading,
-  } = useGetContentsForAdminQuery({});
+  } = useGetContentsForAdminQuery(query);
 
   const navs = [
     {
@@ -26,26 +33,28 @@ export default function Content() {
   ];
 
   const [selectedNav, setSelectedNav] = useState(navs[0]);
-  // const contentData = [
-  //   {
-  //     id: 1,
-  //     title: "Jane Doe",
-  //     description: "Description stuff",
-  //     date: "23/08/2024",
-  //     category: "Trending News",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Jane Doe",
-  //     description: "Description stuff",
-  //     date: "23/08/2024",
-  //     category: "Trending News",
-  //   },
-  // ];
+  const [contentData, setContentData] = useState<any>([]);
+
+  const handleStatusChange = useCallback(() => {
+    setQuery((query) => ({
+      ...query,
+      status: selectedNav?.label,
+    }));
+  }, [selectedNav]);
 
   useEffect(() => {
-    if (contentResponse?.result?.items?.length > 0) {
-      setContentData(contentResponse?.result.items);
+    contentRefetch();
+  }, [query, contentRefetch]);
+
+  useEffect(() => {
+    handleStatusChange();
+  }, [handleStatusChange]);
+
+  useEffect(() => {
+    console.log('called' + contentResponse?.result?.items?.length)
+    if (contentResponse?.result?.items ) {
+
+      setContentData(contentResponse?.result?.items);
     }
   }, [contentResponse]);
   return (
@@ -68,6 +77,11 @@ export default function Content() {
       </div>
 
       <div className=" py-6">
+        {contentLoading && contentData.length === 0 ? (
+          <div className="my-40">
+            <Loader />
+          </div>
+        ) : null}
         {contentData?.length > 0 ? (
           <div className="flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -109,14 +123,14 @@ export default function Content() {
                       </th> */}
                     </tr>
                   </thead>
-                  {contentLoading && contentData.length === 0 ? (
-                    <div className="my-40">
-                      <Loader />
-                    </div>
-                  ) : null}
+
                   <tbody className="divide-y divide-[#F2F2F2]">
                     {contentData?.map((item) => (
-                      <tr key={item.id}>
+                      <tr
+                        onClick={() => navigate(`/admin/content/${item?.id}`)}
+                        className={"cursor-pointer"}
+                        key={item.id}
+                      >
                         <td className="whitespace-nowrap py-8 pl-4 pr-3 text-base font-normal text-[#212121] sm:pl-0">
                           {item.title}
                         </td>
@@ -126,7 +140,7 @@ export default function Content() {
                         </td>
 
                         <td className="whitespace-nowrap px-3 py-8 text-base font-normal text-[#212121]">
-                          {item.date}
+                          {moment(item.createdAt).format("DD/MM/yyyy")}
                         </td>
 
                         <td className="relative whitespace-nowrap py-8 pl-3 pr-4 text-left text-sm font-medium sm:pr-0">
@@ -141,11 +155,13 @@ export default function Content() {
               </div>
             </div>
           </div>
-        ) : (
+        ) : null}
+
+        {!contentLoading && contentData.length === 0 ? (
           <div className="my-[60px] flex items-center justify-center text-base text-primary">
             Nothing to see yet
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

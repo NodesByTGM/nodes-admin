@@ -115,4 +115,7 @@ export { default as RateComponent } from "./RateComponent";
 export { default as RatingStar } from "./RatingStar";
 export { default as SidebarMenu } from "./SidebarMenu";
 export { default as LoadingInputs } from "./LoadingInputs";
-
+export { default as CustomSelect } from "./CustomSelect";
+export { default as ContentComments } from "./ContentComments";
+export { default as ConfirmComponent } from "./ConfirmComponent";
+export { default as ViewCommentSection } from "./ViewCommentSection";

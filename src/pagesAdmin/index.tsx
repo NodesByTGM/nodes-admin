@@ -5,6 +5,7 @@ export { default as AdminForgotPassword } from "./auth/ForgotPassword";
 export { default as AdminResetPassword } from "./auth/ResetPassword";
 export { default as AdminContent } from "./Content/Content";
 export { default as AdminContentBase } from "./Content/ContentBase";
+export { default as AdminContentDetail } from "./Content/ContentDetail";
 export { default as AdminUser } from "./User/User";
 export { default as AdminUserBase } from "./User/UserBase";
 export { default as AdminSubscription } from "./Subscription/Subscription";

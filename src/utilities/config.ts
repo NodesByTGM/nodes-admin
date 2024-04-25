@@ -96,6 +96,7 @@ const PATHS = {
     Content: {
       Base: "/admin/content",
       Default: "",
+      Detail: "/admin/content/:id"
     },
     UserDetails: {
       Base: "/admin/user/:id",

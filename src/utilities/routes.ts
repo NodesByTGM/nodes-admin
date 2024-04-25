@@ -8,6 +8,7 @@ import {
   AdminResetPassword,
   AdminContent,
   AdminContentBase,
+  AdminContentDetail,
   AdminUser,
   AdminUserBase,
   AdminSubscription,
@@ -65,6 +66,12 @@ export const adminMainRoutes: RouteObject[] = [
         path: AppConfig.PATHS.Admin.Content.Default,
         Component: AdminContent,
       },
+      {
+        path: AppConfig.PATHS.Admin.Content.Detail,
+        Component: AdminContentDetail,
+      },
+
+      
     ],
   },
   {

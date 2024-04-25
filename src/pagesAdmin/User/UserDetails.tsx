@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Breadcrumbs,
   Button,
@@ -7,19 +7,21 @@ import {
   ButtonOutline,
   Modal,
   LoadingInputs,
+  FormDebug,
 } from "../../components";
-import { getAge } from "../../utilities/common";
+// import { getAge } from "../../utilities/common";
 
 import AppConfig from "../../utilities/config";
 import BillingHistory from "./BillingHistory";
 import { useUsersContext } from "../../context/hooks";
-import { useGetUserByIdQuery } from "../../api";
+import { useGetUserWithIdQuery } from "../../api";
 import {
-  profileSchema,
-  profileValidationType,
+  adminUserProfileSchema,
+  AdminUserProfileValidationType,
 } from "../../utilities/validation";
 import { useFormik } from "formik";
-import { useParams,  } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
 export default function UserDetails() {
   const { id } = useParams();
@@ -30,10 +32,11 @@ export default function UserDetails() {
     data: userDetailsResponse,
     // refetch: userDetailsRefetch,
     isFetching: userDetailsLoading,
-  } = useGetUserByIdQuery({ userId: id });
+    isSuccess: userDetailsIsSuccess,
+  } = useGetUserWithIdQuery({ id: id });
 
   const [historyModal, setHistoryModal] = useState(false);
-  const [links] = useState([
+  const [links, setLinks] = useState([
     {
       id: 1,
       title: "User",
@@ -41,79 +44,96 @@ export default function UserDetails() {
     },
     {
       id: 2,
-      title: "Name of user",
+      title: "",
       url: "#",
     },
   ]);
-  const initialCollaborator = {
-    name: "",
-    role: "",
-    collabName: "",
-  };
 
   const handleClickForm = (values: any) => {
-    const data = {
-      name: `${values.firstName} ${values.lastName}`,
-      username: values.username,
-      avatar: values.avatar,
-      skills: [],
-      location: values.location,
-      height: values.height,
-      age: getAge(values.age),
-      linkedIn: values.linkedIn,
-      instagram: values.instagram,
-      twitter: values.twitter,
-      headline: values.headline,
-      bio: values.bio,
-      website: values.website,
-      spaces: values.spaces,
-      comments: values.comments,
-      companyName: values.projectName,
-      logo: values.projectUrl,
-      yoe: 0,
-    };
-    console.log(JSON.stringify(data, null, 2));
+    // const data = {
+    //   name: `${values.firstName} ${values.lastName}`,
+    //   username: values.username,
+    //   avatar: values.avatar,
+    //   skills: [],
+    //   location: values.location,
+    //   height: values.height,
+    //   age: getAge(values.age),
+    //   linkedIn: values.linkedIn,
+    //   instagram: values.instagram,
+    //   twitter: values.twitter,
+    //   headline: values.headline,
+    //   bio: values.bio,
+    //   website: values.website,
+    //   spaces: values.spaces,
+    //   comments: values.comments,
+    //   companyName: values.projectName,
+    //   logo: values.projectUrl,
+    //   yoe: 0,
+    // };
+    console.log(JSON.stringify(values, null, 2));
     // updateUserProfile(data);
   };
-  const formik = useFormik<profileValidationType>({
+  const formik = useFormik<AdminUserProfileValidationType>({
     initialValues: {
-      firstName: userDetailsResponse?.result?.name?.split(" ")[0],
-      lastName: userDetailsResponse?.result?.name?.split(" ")[1],
+      name: userDetailsResponse?.result?.name?.split(" ")[0],
       username: userDetailsResponse?.result?.username,
-      avatar: userDetailsResponse?.result?.avatar,
-      location: userDetailsResponse?.result?.location,
-      height: userDetailsResponse?.result?.height,
-      age: userDetailsResponse?.result?.dob,
-      headline: userDetailsResponse?.result?.headline,
-      bio: userDetailsResponse?.result?.bio,
-      website: userDetailsResponse?.result?.website,
-      linkedIn: userDetailsResponse?.result?.linkedIn,
-      instagram: userDetailsResponse?.result?.instagram,
-      twitter: userDetailsResponse?.result?.twitter,
-      projectName: userDetailsResponse?.result?.projectName,
-      description: userDetailsResponse?.result?.description,
-      projectUrl: userDetailsResponse?.result?.projectUrl,
-      spaces: userDetailsResponse?.result?.spaces,
-      comments: userDetailsResponse?.result?.comments,
-      collaborators: [initialCollaborator],
+      email: userDetailsResponse?.result?.email,
+      createdAt: userDetailsResponse?.result?.createdAt,
+      category: userDetailsResponse?.result?.category,
+      subscription: userDetailsResponse?.result?.subscription?.plan
+        ? `${userDetailsResponse?.result?.subscription?.plan}/${userDetailsResponse?.result?.subscription?.tenor}`
+        : "",
     },
-    validationSchema: profileSchema,
+    validationSchema: adminUserProfileSchema,
     validateOnBlur: true,
     onSubmit: handleClickForm,
   });
 
   const {
     // setFieldError,
-    // setValues,
+    setValues,
     // setFieldValue,
-    // handleChange,
+    handleChange,
     handleSubmit,
-    // errors,
-    // touched,
-    // values,
+    errors,
+    touched,
+    values,
     // isValid,
-    // handleBlur,
+    handleBlur,
   } = formik;
+  const handleInputPrefill = useCallback(() => {
+    setValues({
+      name: userDetailsResponse?.result?.name?.split(" ")[0],
+      username: userDetailsResponse?.result?.username,
+      email: userDetailsResponse?.result?.email,
+      createdAt: userDetailsResponse?.result?.createdAt,
+      category: userDetailsResponse?.result?.category,
+      subscription: userDetailsResponse?.result?.subscription?.plan
+        ? `${userDetailsResponse?.result?.subscription?.plan}/${userDetailsResponse?.result?.subscription?.tenor}`
+        : "",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetailsResponse, setValues]);
+  useEffect(() => {
+    if (userDetailsResponse?.result) {
+      // setUserData(userDetailsResponse?.result);
+      handleInputPrefill();
+    }
+  }, [userDetailsResponse, handleInputPrefill]);
+
+  useEffect(() => {
+    if (userDetailsIsSuccess) {
+      setLinks((prev) => {
+        return [
+          prev[0],
+          {
+            ...prev[1],
+            title: values.name,
+          },
+        ];
+      });
+    }
+  }, [userDetailsIsSuccess, values.name]);
   return (
     <div>
       <pre className="text-blue-400 hidden">
@@ -122,6 +142,7 @@ export default function UserDetails() {
       <pre className="text-blue-400 hidden">
         {JSON.stringify({ userDetailsResponse }, null, 2)}
       </pre>
+      <FormDebug form={values} className="hidden" />
       <div className="flex items-center justify-between mb-6">
         <Breadcrumbs links={links} />
         <Button className="!bg-[#D11F54] max-w-max">Delete User</Button>
@@ -144,11 +165,11 @@ export default function UserDetails() {
                   placeholder={"Name of user"}
                   id="name"
                   label="Name of user"
-                  // error={errors.name}
-                  // value={values.name}
-                  // touched={touched.name}
-                  // onChange={handleChange("name")}
-                  // onBlur={handleBlur}
+                  error={errors.name}
+                  value={values.name}
+                  touched={touched.name}
+                  onChange={handleChange("name")}
+                  onBlur={handleBlur}
                 />
               </div>
               <div className="w-full">
@@ -156,11 +177,11 @@ export default function UserDetails() {
                   placeholder={"@username"}
                   id="username"
                   label="User name"
-                  // error={errors.username}
-                  // value={values.username}
-                  // touched={touched.username}
-                  // onChange={handleChange("username")}
-                  // onBlur={handleBlur}
+                  error={errors.username}
+                  value={values.username}
+                  touched={touched.username}
+                  onChange={handleChange("username")}
+                  onBlur={handleBlur}
                 />
               </div>
 
@@ -170,24 +191,24 @@ export default function UserDetails() {
                   id="email"
                   type="email"
                   label="Email address"
-                  // error={errors.email}
-                  // value={values.email}
-                  // touched={touched.email}
-                  // onChange={handleChange("email")}
-                  // onBlur={handleBlur}
+                  error={errors.email}
+                  value={values.email}
+                  touched={touched.email}
+                  onChange={handleChange("email")}
+                  onBlur={handleBlur}
                 />
               </div>
               <div className="w-full">
                 <Input
                   placeholder={"DD/MM/YY"}
-                  id="date"
+                  id="createdAt"
                   type="date"
                   label="Date joined"
-                  // error={errors.date}
-                  // value={values.date}
-                  // touched={touched.date}
-                  // onChange={handleChange("date")}
-                  // onBlur={handleBlur}
+                  error={errors.createdAt}
+                  value={moment(values.createdAt).format("yyyy-MM-DD")}
+                  touched={touched.createdAt}
+                  onChange={handleChange("createdAt")}
+                  onBlur={handleBlur}
                 />
               </div>
 
@@ -196,11 +217,11 @@ export default function UserDetails() {
                   placeholder={"Category"}
                   id="category"
                   label="Category"
-                  // error={errors.category}
-                  // value={values.category}
-                  // touched={touched.category}
-                  // onChange={handleChange("category")}
-                  // onBlur={handleBlur}
+                  error={errors.category}
+                  value={values.category}
+                  touched={touched.category}
+                  onChange={handleChange("category")}
+                  onBlur={handleBlur}
                 />
               </div>
             </div>
@@ -211,11 +232,11 @@ export default function UserDetails() {
                   placeholder={"Subscription"}
                   id="subscription"
                   label="Subscription"
-                  // error={errors.subscription}
-                  // value={values.subscription}
-                  // touched={touched.subscription}
-                  // onChange={handleChange("subscription")}
-                  // onBlur={handleBlur}
+                  error={errors.subscription}
+                  value={values.subscription}
+                  touched={touched.subscription}
+                  onChange={handleChange("subscription")}
+                  onBlur={handleBlur}
                 />
               </div>
               <div className="flex items-center justify-between">
