@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { X } from "react-feather";
 import {
   Breadcrumbs,
   Button,
@@ -13,6 +14,7 @@ import {
   LoadingInputs,
   ConfirmComponent,
   Modal,
+  ViewCommentSection,
 } from "../../components";
 import AppConfig from "../../utilities/config";
 import { toast } from "react-toastify";
@@ -50,6 +52,8 @@ export default function ContentDetail() {
 
   const [contentDetail, setContentDetail] = useState<any>(null);
   const [statusModal, setStatusModal] = useState(false);
+  const [commentsModal, setCommentsModal] = useState(false);
+
   const [actionType, setActionType] = useState("");
   const initialModalText = useMemo(() => {
     return {
@@ -88,7 +92,7 @@ export default function ContentDetail() {
     setStatusModal(true);
   };
 
-  const [links] = useState([
+  const [links, setLinks] = useState([
     {
       id: 1,
       title: "Content",
@@ -100,6 +104,7 @@ export default function ContentDetail() {
       url: "#",
     },
   ]);
+
   const handleFormSubmit = (e: any) => {
     console.log(JSON.stringify(e, null, 2));
 
@@ -197,7 +202,20 @@ export default function ContentDetail() {
       );
     }
   }, [isUpdateRequestError, updateRequestError, resetModal]);
-  
+
+  useEffect(() => {
+    if (isGetContentSuccess) {
+      setLinks((prev) => {
+        return [
+          prev[0],
+          {
+            ...prev[1],
+            title: values.title,
+          },
+        ];
+      });
+    }
+  }, [isGetContentSuccess, values.title]);
 
   return (
     <div className="">
@@ -296,7 +314,10 @@ export default function ContentDetail() {
                   Comments
                 </span>
 
-                <div className="border font-normal text-base flex items-center justify-center py-3 px-6 rounded border-customprimary text-customprimary">
+                <div
+                  onClick={() => setCommentsModal(true)}
+                  className="border font-normal text-base flex items-center justify-center py-3 px-6 rounded border-customprimary text-customprimary"
+                >
                   View comments
                 </div>
               </div>
@@ -318,6 +339,28 @@ export default function ContentDetail() {
           isLoading={updateRequestLoading}
           closeModal={() => setStatusModal(false)}
         />
+      </Modal>
+
+      <Modal
+        sizeClass="sm:max-w-[506px]"
+        open={commentsModal}
+        setOpen={setCommentsModal}
+      >
+        <div className="flex flex-col w-full">
+          <div className="flex justify-between items-center">
+            <span className="">Comments</span>
+
+            <span
+              onClick={() => setCommentsModal(false)}
+              className="cursor-pointer"
+            >
+              <X />
+            </span>
+          </div>
+
+          <ViewCommentSection />
+          <ViewCommentSection last />
+        </div>
       </Modal>
 
       <pre className="hidden">{JSON.stringify(values, null, 2)}</pre>

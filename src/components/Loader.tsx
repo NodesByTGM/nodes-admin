@@ -11,7 +11,7 @@ export default function Loader({ spinner = true, className="size-14 mx-auto", co
     <div>
       {spinner && (
         <div className={`${className}`}>
-          <Spinner className={`h-full w-full ${color} animate-spin ease-linear`} />
+          <Spinner className={`h-full w-full ${color} animate-spin ease-linear`} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
         </div>
       )}
     </div>
