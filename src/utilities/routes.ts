@@ -70,6 +70,12 @@ export const adminMainRoutes: RouteObject[] = [
         path: AppConfig.PATHS.Admin.Content.Detail,
         Component: AdminContentDetail,
       },
+      {
+        path: AppConfig.PATHS.Admin.Content.Create,
+        Component: AdminContentDetail,
+      },
+
+      
 
       
     ],
