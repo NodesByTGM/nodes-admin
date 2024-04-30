@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useState } from "react";
-import { AdminPageHeader, AdminPageNav, Loader } from "../../components";
+import {
+  AdminPageHeader,
+  AdminPageNav,
+  Loader,
+  Button,
+} from "../../components";
 import { useContentContext } from "../../context/hooks";
 import { useGetContentsForAdminQuery } from "../../api";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +18,6 @@ export default function Content() {
     category: "",
   });
 
- 
   const {
     data: contentResponse,
     refetch: contentRefetch,
@@ -51,9 +55,8 @@ export default function Content() {
   }, [handleStatusChange]);
 
   useEffect(() => {
-    console.log('called' + contentResponse?.result?.items?.length)
-    if (contentResponse?.result?.items ) {
-
+    console.log("called" + contentResponse?.result?.items?.length);
+    if (contentResponse?.result?.items) {
       setContentData(contentResponse?.result?.items);
     }
   }, [contentResponse]);
@@ -67,6 +70,13 @@ export default function Content() {
           title="Content"
           subTitle="Something something about content management"
         />
+
+        <Button
+          onClick={() => navigate(`/admin/content/create`)}
+          className="max-w-max !h-12 !px-6"
+        >
+          Create a post
+        </Button>
       </div>
       <div className="mb-[28px]">
         <AdminPageNav
@@ -127,7 +137,7 @@ export default function Content() {
                   <tbody className="divide-y divide-[#F2F2F2]">
                     {contentData?.map((item) => (
                       <tr
-                        onClick={() => navigate(`/admin/content/${item?.id}`)}
+                        onClick={() => navigate(`/admin/content/edit/${item?.id}`)}
                         className={"cursor-pointer"}
                         key={item.id}
                       >

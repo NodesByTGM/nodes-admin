@@ -38,7 +38,7 @@ export default function ContentDetail() {
     // refetch: contentRefetch,
     isSuccess: isGetContentSuccess,
     isFetching: contentLoading,
-  } = useGetContentByIdQuery({ id: id });
+  } = useGetContentByIdQuery({ id: id }, { skip: !id });
 
   const [
     updateRequest,
@@ -141,17 +141,21 @@ export default function ContentDetail() {
   } = formik;
 
   const handleInputPrefill = useCallback(() => {
-    setValues({
-      title: contentDetail?.title,
-      lastEdited: moment(contentDetail?.updatedAt).format("yyyy-MM-DD"),
-      thumbnail: {
-        id: contentDetail?.thunbnail?.id ? contentDetail?.thunbnail?.id : "",
-        url: contentDetail?.thunbnail?.url ? contentDetail?.thunbnail?.url : "",
-      },
-      category: contentDetail?.category,
-      description: contentDetail?.description,
-      status: contentDetail?.status,
-    });
+    if (id) {
+      setValues({
+        title: contentDetail?.title,
+        lastEdited: moment(contentDetail?.updatedAt).format("yyyy-MM-DD"),
+        thumbnail: {
+          id: contentDetail?.thunbnail?.id ? contentDetail?.thunbnail?.id : "",
+          url: contentDetail?.thunbnail?.url
+            ? contentDetail?.thunbnail?.url
+            : "",
+        },
+        category: contentDetail?.category,
+        description: contentDetail?.description,
+        status: contentDetail?.status,
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentDetail, setValues]);
 
@@ -309,18 +313,20 @@ export default function ContentDetail() {
                 />
               </div>
 
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-base text-[#000000]">
-                  Comments
-                </span>
+              {id ? (
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-base text-[#000000]">
+                    Comments
+                  </span>
 
-                <div
-                  onClick={() => setCommentsModal(true)}
-                  className="border font-normal text-base flex items-center justify-center py-3 px-6 rounded border-customprimary text-customprimary"
-                >
-                  View comments
+                  <div
+                    onClick={() => setCommentsModal(true)}
+                    className="border font-normal text-base flex items-center justify-center py-3 px-6 rounded border-customprimary text-customprimary"
+                  >
+                    View comments
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         )}

@@ -85,7 +85,7 @@ export default function CustomSelect({
                         {isSort ? "Sort by:" : ""}
                       </span>
 
-                      {selected ? selected : <span className="text-gray-400">Select Location</span> }
+                      {selected ? selected : <span className="text-gray-400">Select </span> }
                     </span>
                     <span className="">
                       <svg
