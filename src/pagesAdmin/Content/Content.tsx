@@ -10,11 +10,12 @@ import { useContentContext } from "../../context/hooks";
 import { useGetContentsForAdminQuery } from "../../api";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import {AdminEnums} from '../../utilities/constants'
 export default function Content() {
   const { pageName, user } = useContentContext();
   const navigate = useNavigate();
   const [query, setQuery] = useState({
-    status: "",
+    status: AdminEnums.CONTENT_STATUSES.Published,
     category: "",
   });
 
@@ -27,12 +28,15 @@ export default function Content() {
   const navs = [
     {
       label: "Published",
+      value: AdminEnums.CONTENT_STATUSES.Published
     },
     {
-      label: "Archives",
+      label: "Archived",
+      value: AdminEnums.CONTENT_STATUSES.Archived
     },
     {
       label: "Drafts",
+      value: AdminEnums.CONTENT_STATUSES.Draft
     },
   ];
 
@@ -42,7 +46,7 @@ export default function Content() {
   const handleStatusChange = useCallback(() => {
     setQuery((query) => ({
       ...query,
-      status: selectedNav?.label,
+      status: selectedNav?.value,
     }));
   }, [selectedNav]);
 

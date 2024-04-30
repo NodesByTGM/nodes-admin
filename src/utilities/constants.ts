@@ -410,4 +410,49 @@ export const ContentCategories = [
   { id: "Hidden Gems", name: "Hidden Gems" },
   { id: "Birthdays", name: "Birthdays" },
   { id: "Trending News", name: "Trending News" },
+  { id: "Movies", name: "Movies" },
+  { id: "Flashbacks", name: "Flashbacks" },
+  { id: "Collaboration Spotlights", name: "Collaboration Spotlights" },
 ];
+
+export const AdminEnums = {
+  ACCOUNT_ROLES: {
+    USER: 0,
+    ADMIN: 1,
+  },
+  ACCOUNT_TYPES: {
+    DEFAULT: 0,
+    TALENT: 1,
+    BUSINESS: 2,
+  },
+  JOB_TYPES: {
+    FULL_TIME: 0,
+    PART_TIME: 1,
+    CONTRACT: 2,
+  },
+  POST_TYPES: {
+    Community: 0,
+    Space: 1,
+  },
+  MEMBER_TYPES: {
+    Member: 0,
+    Admin: 1,
+  },
+  CONTENT_CATEGORIES: {
+    Movies: "Movies",
+    Birthdays: "Birthdays",
+    HiddenGems: "Hidden Gems",
+    Flashbacks: "Flashbacks",
+    Spotlights: "Collaboration Spotlights",
+    TrendingNews: "Trending News",
+  },
+  CONTENT_STATUSES: {
+    Published: "Published",
+    Archived: "Archived",
+    Draft: "Draft",
+  },
+  ADMIN_ROLES: {
+    SUPERADMIN: 9,
+    MEMBER: 1,
+  },
+};

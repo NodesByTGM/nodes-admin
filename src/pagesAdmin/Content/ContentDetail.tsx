@@ -23,16 +23,20 @@ import {
   ContentValidationType,
 } from "../../utilities/validation";
 import moment from "moment";
-import { ContentCategories } from "../../utilities/constants";
-import { useUpdateContentForAdminMutation } from "../../api";
+import { ContentCategories, AdminEnums } from "../../utilities/constants";
+import {
+  useUpdateContentForAdminMutation,
+  useCreateContentForAdminMutation,
+} from "../../api";
 import {
   // FormikHelpers,
   useFormik,
 } from "formik";
 import { useGetContentByIdQuery } from "../../api";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 export default function ContentDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     data: getContentRequest,
     // refetch: contentRefetch,
@@ -50,6 +54,16 @@ export default function ContentDetail() {
     },
   ] = useUpdateContentForAdminMutation({ id: id });
 
+  const [
+    createRequest,
+    {
+      isSuccess: isCreateRequestSuccess,
+      isError: isCreateRequestError,
+      error: createRequestError,
+      isLoading: createRequestLoading,
+    },
+  ] = useCreateContentForAdminMutation();
+
   const [contentDetail, setContentDetail] = useState<any>(null);
   const [statusModal, setStatusModal] = useState(false);
   const [commentsModal, setCommentsModal] = useState(false);
@@ -65,31 +79,51 @@ export default function ContentDetail() {
   const [modalText, setModalText] = useState(initialModalText);
 
   const handleModalText = useCallback(() => {
-    if (actionType.toLowerCase() === "publish")
+    if (
+      actionType.toLowerCase() ===
+      AdminEnums.CONTENT_STATUSES.Published.toLowerCase()
+    )
       setModalText({
         text: "Publish this content",
         description:
           "You are about to publish this content. Do you want to proceed?",
-        status: "Publish",
+        status: actionType,
       });
 
-    if (actionType.toLowerCase() === "draft")
+    if (
+      actionType.toLowerCase() ===
+      AdminEnums.CONTENT_STATUSES.Draft.toLowerCase()
+    )
       setModalText({
         text: "Save this content to draft",
         description:
           "You are about to save this content. Do you want to proceed?",
-        status: "Draft",
+        status: actionType,
       });
   }, [actionType]);
 
   const handlePublishOpen = () => {
-    setActionType("Publish");
+    setActionType(AdminEnums.CONTENT_STATUSES.Published);
     setStatusModal(true);
   };
 
   const handleDraftOpen = () => {
-    setActionType("Draft");
+    setActionType(AdminEnums.CONTENT_STATUSES.Draft);
     setStatusModal(true);
+  };
+
+  const handleContentCreationAndUpdate = () => {
+    if (id) {
+      updateRequest({ ...values, status: modalText?.status, id: id });
+    } else {
+      createRequest({
+        title: values.title,
+        description: values.description,
+        status: modalText?.status,
+        category: values.category,
+        thumbnail: values?.thumbnail?.url ? values.thumbnail : null,
+      });
+    }
   };
 
   const [links, setLinks] = useState([
@@ -106,9 +140,9 @@ export default function ContentDetail() {
   ]);
 
   const handleFormSubmit = (e: any) => {
-    console.log(JSON.stringify(e, null, 2));
+    // console.log("Content:" + JSON.stringify(e, null, 2));
 
-    return;
+    return e;
   };
 
   const formik = useFormik<ContentValidationType>({
@@ -141,14 +175,14 @@ export default function ContentDetail() {
   } = formik;
 
   const handleInputPrefill = useCallback(() => {
-    if (id) {
+    if (contentDetail?.id) {
       setValues({
         title: contentDetail?.title,
         lastEdited: moment(contentDetail?.updatedAt).format("yyyy-MM-DD"),
         thumbnail: {
-          id: contentDetail?.thunbnail?.id ? contentDetail?.thunbnail?.id : "",
-          url: contentDetail?.thunbnail?.url
-            ? contentDetail?.thunbnail?.url
+          id: contentDetail?.thumbnail?.id ? contentDetail?.thumbnail?.id : "",
+          url: contentDetail?.thumbnail?.url
+            ? contentDetail?.thumbnail?.url
             : "",
         },
         category: contentDetail?.category,
@@ -180,7 +214,30 @@ export default function ContentDetail() {
     // setActionType("");
     setStatusModal(false);
     // setModalText(initialModalText);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialModalText]);
+
+  useEffect(() => {
+    if (isCreateRequestSuccess) {
+      resetModal();
+
+      toast.success(`Successfully published content`);
+      navigate("/admin/content");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCreateRequestSuccess, resetModal]);
+
+  useEffect(() => {
+    resetModal();
+
+    if (isCreateRequestError || createRequestError) {
+      toast.error(
+        createRequestError?.message
+          ? createRequestError?.message?.message
+          : "This action was unsuccessful"
+      );
+    }
+  }, [isCreateRequestError, createRequestError, resetModal]);
 
   useEffect(() => {
     if (isUpdateRequestSuccess) {
@@ -236,19 +293,22 @@ export default function ContentDetail() {
             <Button
               onClick={() => handlePublishOpen()}
               disabled={!isValid}
-              className="!bg-customprimary max-w-max"
+              className={`${
+                !isValid ? "opacity-50" : ""
+              } !bg-customprimary max-w-max`}
             >
               Publish
             </Button>
             <ButtonOutline
               onClick={() => handleDraftOpen()}
               disabled={!isValid}
+              className={`${!isValid ? "opacity-50" : ""} `}
             >
               Save as draft
             </ButtonOutline>
           </div>
         </div>
-        <FormDebug form={values} className="hidden" />
+        <FormDebug form={{values, contentDetail}} className="max-w-[600px] hidden" />
         {contentLoading ? (
           <LoadingInputs />
         ) : (
@@ -340,9 +400,9 @@ export default function ContentDetail() {
           title={modalText.text}
           text={modalText.description}
           action={() => {
-            updateRequest({ ...values, status: modalText?.status, id: id });
+            handleContentCreationAndUpdate();
           }}
-          isLoading={updateRequestLoading}
+          isLoading={updateRequestLoading || createRequestLoading}
           closeModal={() => setStatusModal(false)}
         />
       </Modal>
